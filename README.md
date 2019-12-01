@@ -1,2 +1,2 @@
-# 18120321_18120322
-Do an 2
+# OOP_PINGPONG
+A course in university 
