@@ -168,7 +168,7 @@ void MainGame::Play()
 	SDL_Event e;
 
 	CPU cpu;
-
+	Brick brick(_render, 10, 10);
 	string fontPath = "Lib\\font\\SP3-TravelingTypewriter.ttf";
 	string fontPathCP = "Lib\\font\\VeraMoBd.ttf";
 
@@ -345,7 +345,7 @@ void MainGame::Play()
 			_player1.Draw();
 			_player2.Draw();
 			_ball.Draw();
-
+			brick.Show();
 			//Update screen
 			SDL_RenderPresent(_render);
 			SDL_Delay(1000 / _fps);
