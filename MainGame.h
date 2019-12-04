@@ -9,7 +9,7 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include "SDL_TextView.h"
-
+#include"Brick.h"
 using namespace std;
 
 class MainGame
