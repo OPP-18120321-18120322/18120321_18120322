@@ -3,17 +3,10 @@
 
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
-<<<<<<< HEAD
 
 using namespace std;
 int main() {
 
-=======
-
-using namespace std;
-int main() {
-
->>>>>>> dcda2ccec6c3ea737cc3111d76a7d1c573f5a16b
 	MainGame gamePlay;
 	//Initializes  the subsystems
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
@@ -30,7 +23,6 @@ int main() {
 	//	return -1;
 	//}
 	// game launcher already appeared from here
-<<<<<<< HEAD
 
 	gamePlay.Play();
 
@@ -98,11 +90,4 @@ int main() {
 //	close();
 //	return 0;
 //}
-=======
 
-	gamePlay.Play();
-
-	return 0;
-}
-
->>>>>>> dcda2ccec6c3ea737cc3111d76a7d1c573f5a16b
