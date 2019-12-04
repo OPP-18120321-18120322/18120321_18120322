@@ -16,8 +16,8 @@ class MainGame
 {
 public:
 	// const 
-	static const int DEFAULT_WIDTH = 1280;
-	static const int DEFAULT_HEIGHT = 720;
+	static const int DEFAULT_WIDTH = 960;
+	static const int DEFAULT_HEIGHT = 540;
 	static const int DEFAULT_FPS = 60;
 
 	static const int PLAY_VS_USER = 1;
