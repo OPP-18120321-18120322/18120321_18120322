@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Ball.h"
 #include "Player.h"
 #include "CPU.h"
@@ -10,22 +10,23 @@
 #include <SDL.h>
 #include "SDL_TextView.h"
 #include"Brick.h"
+#include "Maze.h"
 using namespace std;
 
 class MainGame
 {
 public:
 	// const 
-	static const int DEFAULT_WIDTH = 960;
-	static const int DEFAULT_HEIGHT = 540;
+	static const int DEFAULT_WIDTH = 1280;
+	static const int DEFAULT_HEIGHT = 720;
 	static const int DEFAULT_FPS = 60;
 
 	static const int PLAY_VS_USER = 1;
 	static const int PLAY_VS_CPU = 2;
 	
 	// margin by pixel
-	static const int MARGIN_TOP = 50;
-	static const int MARGIN_BOTTOM = 50;
+	static const int MARGIN_TOP = 40;//Cách lề trên 50px.
+	static const int MARGIN_BOTTOM = 20;//Cách lề dưới 50px.
 
 	//attribute:
 private:

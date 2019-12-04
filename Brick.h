@@ -4,7 +4,11 @@
 #include <random>
 #include <time.h> 
 #include <SDL.h>
-#include<SDL_image.h>
+#include <SDL_image.h>
+#include <vector>
+#include<iostream>
+
+using namespace std;
 class Brick
 {
 	// CONST VALUE
@@ -18,6 +22,10 @@ class Brick
 public:
 	static const int BRICK_LENGTH = 60;
 	static const int BRICK_WIDTH = 30;
+
+	//
+	static const int NUMBER_COLUMN = 12;
+	static const int NUMBER_ROW = 10;
 private:
 	// Position
 	SDL_Rect _rect;
@@ -30,9 +38,11 @@ private:
 	SDL_Texture* _texture;
 
 public:
+	Brick();
 	Brick(SDL_Renderer* renderer, int x, int y);
 	~Brick();
 public:
 	void SetRect(int x, int y);
 	void Show();
+	void SetExist( int t);
 };
