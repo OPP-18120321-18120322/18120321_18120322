@@ -9,10 +9,9 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include "SDL_TextView.h"
-#include"Brick.h"
 using namespace std;
 
-class MainGame
+class PingPong
 {
 public:
 	// const 
@@ -56,24 +55,22 @@ private:
 
 	//constructor and destructor
 public:
-	MainGame();
-	MainGame(int, int, int);
-	~MainGame();
-
+	PingPong();
+	PingPong(SDL_Window*& window, SDL_Renderer*& renderer, int, int, int);
+	~PingPong();
+	void SetPingPong(SDL_Window*& window, SDL_Renderer*& renderer);
 	//method
 public:
 	//Descirption: draw board, player and ball
 	//Return: false if user want to quit game, else return false
-	bool ShowMainMenu();
-
+	bool ShowMenuPingPong();
 	//Descirption: Run main game
-	void Play();
+	void PlayPingPong();
+	//// Description: Create and Init SDL, TTF framework
+	//bool InitSDL(SDL_Window*&, SDL_Renderer*&, int, int);
 
-	// Description: Create and Init SDL, TTF framework
-	bool InitSDL(SDL_Window*&, SDL_Renderer*&, int, int);
-
-	// Description: Free and close SDL, TTF framework
-	void CloseSDL(SDL_Window*&, SDL_Renderer*&);
+	//// Description: Free and close SDL, TTF framework
+	//void CloseSDL(SDL_Window*&, SDL_Renderer*&);
 
 private:
 	// Description: Init players and ball

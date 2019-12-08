@@ -1,5 +1,7 @@
 #include "Ball.h"
+#include<iostream>
 
+using namespace std;
 Ball::Ball()
 {
 	_render = nullptr;
@@ -25,7 +27,7 @@ bool Ball::Collide(int DIRECTION)
 	switch (DIRECTION)
 	{
 	case BORDER_LEFT: 
-	{
+	{	
 		_i = (_i > 0) ? _i : -_i;
 		break;
 	}
@@ -53,7 +55,6 @@ bool Ball::Collide(int DIRECTION)
 	default:
 		return false;
 	}
-
 	return true;
 }
 

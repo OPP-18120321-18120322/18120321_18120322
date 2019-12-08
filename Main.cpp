@@ -1,13 +1,13 @@
 #include <iostream>
-#include "MainGame.h"
-
+#include "GamePingPong.h"
+#include"MainMenu.h"
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 
 using namespace std;
 int main() {
 
-	MainGame gamePlay;
+	MainMenu main;
 	//Initializes  the subsystems
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
@@ -24,7 +24,7 @@ int main() {
 	//}
 	// game launcher already appeared from here
 
-	gamePlay.Play();
+	main.Menu();
 
 	return 0;
 }

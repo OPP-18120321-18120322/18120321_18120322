@@ -101,6 +101,7 @@ void SDL_TextView::SetCenterX(int left, int right)
 
 SDL_TextView::SDL_TextView(SDL_Renderer* renderer,int x, int y, string text, int fontSize, string fontName)
 {
+	TTF_Init();
 	SetFont(fontName, fontSize);
 	_text = text;
 

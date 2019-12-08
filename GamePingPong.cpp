@@ -1,6 +1,6 @@
-#include "MainGame.h"
+#include "GamePingPong.h"
 
-bool MainGame::ShowMainMenu()
+bool PingPong::ShowMenuPingPong()
 {
 	if (!_initSucess) {
 		cout << "An error occurred while create SDL Windows, quit now!\n";
@@ -157,7 +157,7 @@ bool MainGame::ShowMainMenu()
 	return _isPlaying;
 }
 
-void MainGame::Play()
+void PingPong::PlayPingPong()
 {
 	if (!_initSucess) {
 		cout << "An error occurred while create SDL Windows, quit now!\n";
@@ -168,13 +168,12 @@ void MainGame::Play()
 	SDL_Event e;
 
 	CPU cpu;
-	Brick brick(_render, 10, 10);
 	string fontPath = "Lib\\font\\SP3-TravelingTypewriter.ttf";
 	string fontPathCP = "Lib\\font\\VeraMoBd.ttf";
 
 	const Uint8* keyboardState = SDL_GetKeyboardState(NULL);
 
-	while (ShowMainMenu()) {
+	while (ShowMenuPingPong()) {
 
 		vector< SDL_TextView> listText;
 		listText.push_back(SDL_TextView(_render, 200, 300, "Player 1", 50, fontPath));
@@ -345,7 +344,7 @@ void MainGame::Play()
 			_player1.Draw();
 			_player2.Draw();
 			_ball.Draw();
-			brick.Show();
+			//cout << "ball" << _ball.AxisI() << " " << _ball.AxisJ() << endl;
 			//Update screen
 			SDL_RenderPresent(_render);
 			SDL_Delay(1000 / _fps);
@@ -354,7 +353,7 @@ void MainGame::Play()
 	}
 }
 
-bool MainGame::InitData(int FLAG)
+bool PingPong::InitData(int FLAG)
 {
 	_isCPU = false;
 	switch (FLAG)
@@ -379,7 +378,7 @@ bool MainGame::InitData(int FLAG)
 	}
 }
 
-void MainGame::InitLayout()
+void PingPong::InitLayout()
 {
 	_verticalLine.w = 1;
 	_verticalLine.h = _height - MARGIN_BOTTOM - MARGIN_TOP;
@@ -397,7 +396,7 @@ void MainGame::InitLayout()
 	_hozinotalBottom.y = _height - MARGIN_BOTTOM;
 }
 
-bool MainGame::Win(int score)
+bool PingPong::Win(int score)
 {
 	SDL_Event e;
 
@@ -530,7 +529,7 @@ bool MainGame::Win(int score)
 	return false;
 }
 
-void MainGame::DrawLayout()
+void PingPong::DrawLayout()
 {
 	SDL_SetRenderDrawColor(_render, 255, 255, 255, 5);
 
@@ -546,7 +545,7 @@ void MainGame::DrawLayout()
 	}
 }
 
-MainGame::MainGame()
+PingPong::PingPong()
 {
 	_width = DEFAULT_WIDTH;
 	_height = DEFAULT_HEIGHT;
@@ -559,24 +558,31 @@ MainGame::MainGame()
 	_cpuLevel = -1;
 	_winner = 0;
 
-	_initSucess = InitSDL(_window, _render, _width, _height);
-
+	//_initSucess = InitSDL(_window, _render, _width, _height);
+	_initSucess = true;
 	InitData(NULL);
 
 	InitLayout();
 
 }
-
-MainGame::MainGame(int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT, int CUSTOM_FPS = DEFAULT_FPS)
+void PingPong::SetPingPong(SDL_Window*& window, SDL_Renderer*& renderer)
 {
+	_window = window;
+	_render = renderer;
+}
+PingPong::PingPong(SDL_Window*& window, SDL_Renderer*& renderer, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT, int CUSTOM_FPS = DEFAULT_FPS)
+{
+	_window = window;
+	_render = renderer;
+
 	_width = width;
 	_height = height;
 	_fps = CUSTOM_FPS;
 
 	_isPlaying = false;
-	_initSucess = false;
-
-	_initSucess = InitSDL(_window, _render, width, height);
+	//_initSucess = false;
+	_initSucess = true;
+	//_initSucess = InitSDL(_window, _render, width, height);
 
 	_isCPU = false;
 	_cpuLevel = -1;
@@ -587,74 +593,75 @@ MainGame::MainGame(int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT, int C
 	InitLayout();
 }
 
-MainGame::~MainGame()
+PingPong::~PingPong()
 {
-	CloseSDL(_window, _render);
+	//DOST
+	//CloseSDL(_window, _render);
 }
 
-bool MainGame::InitSDL(SDL_Window*& window, SDL_Renderer*& renderer, int SCREEN_WIDTH = DEFAULT_WIDTH, int SCREEN_HEIGHT = DEFAULT_HEIGHT)
-{
-	//Initialization flag
-	bool success = true;
+//bool PingPong::InitSDL(SDL_Window*& window, SDL_Renderer*& renderer, int SCREEN_WIDTH = DEFAULT_WIDTH, int SCREEN_HEIGHT = DEFAULT_HEIGHT)
+//{
+//	//Initialization flag
+//	bool success = true;
+//
+//	//Initialize SDL
+//	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+//	{
+//		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
+//		success = false;
+//	}
+//	else
+//	{
+//		//Create window
+//		window = SDL_CreateWindow("PING PONG", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+//		if (window == NULL)
+//		{
+//			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
+//			success = false;
+//		}
+//		else
+//		{
+//			//Create renderer for window
+//			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+//			if (renderer == NULL)
+//			{
+//				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+//				success = false;
+//			}
+//			else
+//			{
+//				//Initialize the truetype font API.
+//				if (TTF_Init() < 0)
+//				{
+//					SDL_Log("%s", TTF_GetError());
+//					return false;
+//				}
+//				else {
+//				//Initialize renderer color
+//				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+//				}
+//			}
+//		}
+//	}
+//	return success;
+//}
+//
+//void PingPong::CloseSDL(SDL_Window*& window, SDL_Renderer*& renderer)
+//{
+//	//Destroy window    
+//	SDL_DestroyRenderer(renderer);
+//	SDL_DestroyWindow(window);
+//	window = NULL;
+//	renderer = NULL;
+//
+//	//Shutdown and cleanup the truetype font API.
+//	TTF_Quit();
+//
+//	//Quit SDL subsystems
+//	SDL_Quit();
+//}
 
-	//Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-	{
-		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-		success = false;
-	}
-	else
-	{
-		//Create window
-		window = SDL_CreateWindow("PING PONG", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (window == NULL)
-		{
-			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
-			success = false;
-		}
-		else
-		{
-			//Create renderer for window
-			renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-			if (renderer == NULL)
-			{
-				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
-				success = false;
-			}
-			else
-			{
-				//Initialize the truetype font API.
-				if (TTF_Init() < 0)
-				{
-					SDL_Log("%s", TTF_GetError());
-					return false;
-				}
-				else {
-				//Initialize renderer color
-				SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				}
-			}
-		}
-	}
-	return success;
-}
-
-void MainGame::CloseSDL(SDL_Window*& window, SDL_Renderer*& renderer)
-{
-	//Destroy window    
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	window = NULL;
-	renderer = NULL;
-
-	//Shutdown and cleanup the truetype font API.
-	TTF_Quit();
-
-	//Quit SDL subsystems
-	SDL_Quit();
-}
-
-bool MainGame::IsCollidePlayer1()
+bool PingPong::IsCollidePlayer1()
 {
 	if (_ball.Center().x <= 0 + _ball.Radius() + _player1.Width()
 		&& _ball.Center().y >= _player1.Pos().y
@@ -666,7 +673,7 @@ bool MainGame::IsCollidePlayer1()
 	return false;
 }
 
-bool MainGame::IsCollidePlayer2()
+bool PingPong::IsCollidePlayer2()
 {
 	if (_ball.Center().x >= _width - _ball.Radius() - _player2.Width()
 		&& _ball.Center().y >= _player2.Pos().y

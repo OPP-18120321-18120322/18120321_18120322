@@ -30,9 +30,12 @@ private:
 	SDL_Texture* _texture;
 
 public:
+	Brick();
 	Brick(SDL_Renderer* renderer, int x, int y);
 	~Brick();
 public:
+	void SetExist() { is_exist = true; }
 	void SetRect(int x, int y);
+	void SetBrick(SDL_Renderer* renderer, int x, int y);
 	void Show();
 };
