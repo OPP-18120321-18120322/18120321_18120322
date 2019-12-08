@@ -172,7 +172,10 @@ void MainGame::Play()
 	//Khởi tạo viên gạch.
 	//Brick brick(_render, 10, 10);
 	Maze maze;
-	maze.SetMap(_render, 1);
+	int num;
+	srand((unsigned int)time(NULL));
+	num = 1 + rand() % 5;
+	maze.SetMap(_render, 6);
 	
 
 	string fontPath = "Lib\\font\\SP3-TravelingTypewriter.ttf";
@@ -525,10 +528,20 @@ bool MainGame::Win(int score)
 	else if (indexPos == 0) {
 		if (_isCPU) {
 			InitData(PLAY_VS_CPU);
+			Maze maze;
+			int num;
+			srand((unsigned int)time(NULL));
+			num = 1 + rand() % 5;
+			maze.SetMap(_render, num);
 		}
 		else
 		{
 			InitData(PLAY_VS_USER);
+			//Maze maze;
+			//int num;
+			//srand((unsigned int)time(NULL));
+			//num = 1 + rand() % 5;
+			//maze.SetMap(_render, num);
 		}
 		_isPlaying = true;
 	}

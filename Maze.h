@@ -1,5 +1,8 @@
 #pragma once
 #include "Brick.h"
+#include <sstream>
+#include <fstream>
+//#define FOLDER_MAZE "Maze/"
 class Maze
 {
 public:
@@ -13,6 +16,7 @@ private:
 	vector<Brick> _bricks[NUMBER_ROW];
 public:
 	Maze();
+	void ReadFileMaze(string filename);
 	void SetMap(SDL_Renderer* renderer, int num);
 	void ShowMap();
 };

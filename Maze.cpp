@@ -10,22 +10,10 @@ Maze::Maze() {
 
 void Maze::SetMap(SDL_Renderer* renderer, int num) {
 	int i, j;
-	switch (num) {
-	case 1:
-		for (j = 0; j < NUMBER_ROW - 1; j++) {
-			_map[0][j] = 1;
-		}
-
-		for (j = 2; j <  NUMBER_COLUMN; j++) {
-			_map[4][j] = 1;
-		}
-
-		for (j = 0; j < NUMBER_ROW - 1; j++) {
-			_map[8][j] = 1;
-		}
-
-		break;
-	}
+	string filename;
+	string type;
+	filename = "Maze/maze" + to_string(num) + ".txt";
+	this->ReadFileMaze(filename);
 
 	for (i = 0; i < NUMBER_ROW; i++) {
 
@@ -49,4 +37,21 @@ void Maze::ShowMap()
 	{
 		for (auto brick : _bricks[i]) brick.Show();
 	}
+}
+
+void Maze::ReadFileMaze(string filename) {
+	ifstream file_in(filename);
+
+	if (file_in.fail()) {
+		cout << "Khong the mo file" << endl;
+		return;
+	}
+
+	for (int i = 0; i < NUMBER_ROW; i++) {
+		for (int j = 0; j < NUMBER_COLUMN; j++) {
+			file_in >>_map[i][j];
+		}
+	}
+
+	file_in.close();
 }
