@@ -1,5 +1,6 @@
 #include "Brick.h"
 
+<<<<<<< HEAD
 Brick::Brick()
 {
 	is_exist = false;
@@ -8,9 +9,20 @@ Brick::Brick()
 	_rect.w = BRICK_WIDTH;
 	_rect.h = BRICK_LENGTH;
 }
+=======
+
+Brick::Brick() {
+	is_exist = false;
+	_rect.w = BRICK_WIDTH;
+	_rect.h = BRICK_LENGTH;
+
+	
+}
+
+>>>>>>> create_maze
 Brick::Brick(SDL_Renderer* renderer, int x, int y)
 {
-	is_exist = true;
+	is_exist = false;
 
 	_rect.x = x;
 	_rect.y = y;
@@ -19,7 +31,13 @@ Brick::Brick(SDL_Renderer* renderer, int x, int y)
 
 	_renderer = renderer;
 	_surface = IMG_Load("brick.png");
+<<<<<<< HEAD
+=======
+
+>>>>>>> create_maze
 	_texture = SDL_CreateTextureFromSurface(_renderer, _surface);
+
+
 }
 Brick::~Brick()
 {
@@ -53,3 +71,13 @@ void Brick::Show()
 	if (is_exist)
 		SDL_RenderCopy(_renderer, _texture, NULL, &_rect);
 }
+
+void Brick::SetExist(int t) {
+	if (t == 0) {
+		this->is_exist = false;
+	}
+	else {
+		this->is_exist = true;
+	}
+}
+

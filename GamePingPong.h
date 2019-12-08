@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Ball.h"
 #include "Player.h"
 #include "CPU.h"
@@ -9,6 +9,11 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include "SDL_TextView.h"
+<<<<<<< HEAD:GamePingPong.h
+=======
+#include"Brick.h"
+#include "Maze.h"
+>>>>>>> create_maze:MainGame.h
 using namespace std;
 
 class PingPong
@@ -23,8 +28,8 @@ public:
 	static const int PLAY_VS_CPU = 2;
 	
 	// margin by pixel
-	static const int MARGIN_TOP = 50;
-	static const int MARGIN_BOTTOM = 50;
+	static const int MARGIN_TOP = 40;//Cách lề trên 50px.
+	static const int MARGIN_BOTTOM = 20;//Cách lề dưới 50px.
 
 	//attribute:
 private:

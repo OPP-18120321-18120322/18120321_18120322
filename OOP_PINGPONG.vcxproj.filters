@@ -33,10 +33,14 @@
     <ClCompile Include="Brick.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GamePingPong.cpp">
+=======
+    <ClCompile Include="Maze.cpp">
+>>>>>>> create_maze
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -59,10 +63,14 @@
     <ClInclude Include="Brick.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="MainMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GamePingPong.h">
+=======
+    <ClInclude Include="Maze.h">
+>>>>>>> create_maze
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

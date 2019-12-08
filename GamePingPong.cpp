@@ -1,4 +1,8 @@
+<<<<<<< HEAD:GamePingPong.cpp
 #include "GamePingPong.h"
+=======
+﻿#include "MainGame.h"
+>>>>>>> create_maze:MainGame.cpp
 
 bool PingPong::ShowMenuPingPong()
 {
@@ -168,6 +172,19 @@ void PingPong::PlayPingPong()
 	SDL_Event e;
 
 	CPU cpu;
+<<<<<<< HEAD:GamePingPong.cpp
+=======
+
+	//Khởi tạo viên gạch.
+	//Brick brick(_render, 10, 10);
+	Maze maze;
+	int num;
+	srand((unsigned int)time(NULL));
+	num = 1 + rand() % 5;
+	maze.SetMap(_render, 6);
+	
+
+>>>>>>> create_maze:MainGame.cpp
 	string fontPath = "Lib\\font\\SP3-TravelingTypewriter.ttf";
 	string fontPathCP = "Lib\\font\\VeraMoBd.ttf";
 
@@ -176,7 +193,7 @@ void PingPong::PlayPingPong()
 	while (ShowMenuPingPong()) {
 
 		vector< SDL_TextView> listText;
-		listText.push_back(SDL_TextView(_render, 200, 300, "Player 1", 50, fontPath));
+		/*listText.push_back(SDL_TextView(_render, 200, 300, "Player 1", 50, fontPath));
 		listText[listText.size() - 1].SetCenterX(0, _width / 2);
 
 		if (_isCPU) {
@@ -188,17 +205,17 @@ void PingPong::PlayPingPong()
 		listText[listText.size() - 1].SetCenterX(_width / 2, _width);
 		
 		listText[0].SetColor({ 255, 255, 255, 120 });
-		listText[1].SetColor({ 255, 255, 255, 120 });
+		listText[1].SetColor({ 255, 255, 255, 120 });*/
 
 		// text for layout
 
-		listText.push_back(SDL_TextView(_render, 0, 10, "PING PONG", 25, fontPathCP));
+		listText.push_back(SDL_TextView(_render, 0, 7, "PING PONG", 25, fontPathCP));
 		listText[listText.size() - 1].SetCenterX(0, _width);
 		listText[listText.size() - 1].SetColor({ 255, 100, 255, 255 });
 
-		listText.push_back(SDL_TextView(_render, 0, _height - MARGIN_BOTTOM + 15, "Copyright by BHD233 & viplazylmht ! FIT @ HCMUS 2019", 18, fontPathCP));
+	/*	listText.push_back(SDL_TextView(_render, 0, _height - MARGIN_BOTTOM + 15, "Copyright by BHD233 & viplazylmht ! FIT @ HCMUS 2019", 18, fontPathCP));
 		listText[listText.size() - 1].SetCenterX(0, _width);
-		listText[listText.size() - 1].SetColor({ 255, 255, 0, 250 });
+		listText[listText.size() - 1].SetColor({ 255, 255, 0, 250 });*/
 		
 		listText.push_back(SDL_TextView(_render, 0, (_height - MARGIN_BOTTOM + MARGIN_TOP) / 2 - 25, "1", 40, fontPathCP));
 		listText[listText.size() - 1].SetCenterX(0, _width);
@@ -344,7 +361,14 @@ void PingPong::PlayPingPong()
 			_player1.Draw();
 			_player2.Draw();
 			_ball.Draw();
+<<<<<<< HEAD:GamePingPong.cpp
 			//cout << "ball" << _ball.AxisI() << " " << _ball.AxisJ() << endl;
+=======
+
+			//brick.Show();
+			maze.ShowMap();
+
+>>>>>>> create_maze:MainGame.cpp
 			//Update screen
 			SDL_RenderPresent(_render);
 			SDL_Delay(1000 / _fps);
@@ -382,7 +406,7 @@ void PingPong::InitLayout()
 {
 	_verticalLine.w = 1;
 	_verticalLine.h = _height - MARGIN_BOTTOM - MARGIN_TOP;
-	_verticalLine.x = _width / 2 - _verticalLine.w / 2;
+	_verticalLine.x = _width / 2 - _verticalLine.w / 2 ;
 	_verticalLine.y = MARGIN_TOP;
 
 	_hozinotalTop.h = 6;
@@ -515,10 +539,20 @@ bool PingPong::Win(int score)
 	else if (indexPos == 0) {
 		if (_isCPU) {
 			InitData(PLAY_VS_CPU);
+			Maze maze;
+			int num;
+			srand((unsigned int)time(NULL));
+			num = 1 + rand() % 5;
+			maze.SetMap(_render, num);
 		}
 		else
 		{
 			InitData(PLAY_VS_USER);
+			//Maze maze;
+			//int num;
+			//srand((unsigned int)time(NULL));
+			//num = 1 + rand() % 5;
+			//maze.SetMap(_render, num);
 		}
 		_isPlaying = true;
 	}
@@ -531,7 +565,7 @@ bool PingPong::Win(int score)
 
 void PingPong::DrawLayout()
 {
-	SDL_SetRenderDrawColor(_render, 255, 255, 255, 5);
+	SDL_SetRenderDrawColor(_render, 255, 180, 0, 5);
 
 	SDL_RenderFillRect(_render, &_verticalLine);
 	SDL_RenderFillRect(_render, &_hozinotalBottom);
