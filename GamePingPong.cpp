@@ -1,8 +1,6 @@
-<<<<<<< HEAD:GamePingPong.cpp
+
 #include "GamePingPong.h"
-=======
-﻿#include "MainGame.h"
->>>>>>> create_maze:MainGame.cpp
+
 
 bool PingPong::ShowMenuPingPong()
 {
@@ -172,8 +170,7 @@ void PingPong::PlayPingPong()
 	SDL_Event e;
 
 	CPU cpu;
-<<<<<<< HEAD:GamePingPong.cpp
-=======
+
 
 	//Khởi tạo viên gạch.
 	//Brick brick(_render, 10, 10);
@@ -184,7 +181,7 @@ void PingPong::PlayPingPong()
 	maze.SetMap(_render, 6);
 	
 
->>>>>>> create_maze:MainGame.cpp
+
 	string fontPath = "Lib\\font\\SP3-TravelingTypewriter.ttf";
 	string fontPathCP = "Lib\\font\\VeraMoBd.ttf";
 
@@ -361,14 +358,14 @@ void PingPong::PlayPingPong()
 			_player1.Draw();
 			_player2.Draw();
 			_ball.Draw();
-<<<<<<< HEAD:GamePingPong.cpp
+
 			//cout << "ball" << _ball.AxisI() << " " << _ball.AxisJ() << endl;
-=======
+
 
 			//brick.Show();
 			maze.ShowMap();
 
->>>>>>> create_maze:MainGame.cpp
+
 			//Update screen
 			SDL_RenderPresent(_render);
 			SDL_Delay(1000 / _fps);

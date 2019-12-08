@@ -153,13 +153,9 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="CPU.cpp" />
     <ClCompile Include="Main.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="GamePingPong.cpp" />
     <ClCompile Include="MainMenu.cpp" />
-=======
-    <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="Maze.cpp" />
->>>>>>> create_maze
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SDL_TextView.cpp" />
   </ItemGroup>
@@ -168,13 +164,9 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="CPU.h" />
     <ClInclude Include="LibGame.h" />
-<<<<<<< HEAD
     <ClInclude Include="GamePingPong.h" />
     <ClInclude Include="MainMenu.h" />
-=======
-    <ClInclude Include="MainGame.h" />
     <ClInclude Include="Maze.h" />
->>>>>>> create_maze
     <ClInclude Include="Player.h" />
     <ClInclude Include="SDL_TextView.h" />
   </ItemGroup>

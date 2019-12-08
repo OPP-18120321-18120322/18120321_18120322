@@ -9,11 +9,9 @@
 #define SDL_MAIN_HANDLED
 #include <SDL.h>
 #include "SDL_TextView.h"
-<<<<<<< HEAD:GamePingPong.h
-=======
 #include"Brick.h"
 #include "Maze.h"
->>>>>>> create_maze:MainGame.h
+
 using namespace std;
 
 class PingPong
