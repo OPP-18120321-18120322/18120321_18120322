@@ -1,8 +1,13 @@
 #pragma once
 
+#include<iostream>
 #include "LibGame.h"
 #define SDL_MAIN_HANDLED
 #include "SDL.h"
+#include "SDL_image.h"
+
+using namespace std;
+
 class Player
 {
 public:
@@ -22,6 +27,8 @@ private:
 	
 	//frontend
 	SDL_Renderer* _render;
+	SDL_Surface* _surface;
+	SDL_Texture* _texture;
 	SDL_Rect _rect;
 
 public:
@@ -49,6 +56,8 @@ public:
 
 	//Description: show player to the board
 	void Draw();
-
+public:	
+	void LoadImg(SDL_Renderer* renderer, SDL_Rect rect, string fileimg);
+	void ShowImg(); 
 };
 

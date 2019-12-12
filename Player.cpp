@@ -89,5 +89,19 @@ Player::Player(Point pos, int length, int width, int speed, int id, SDL_Renderer
 
 Player::~Player()
 {
-	//do something
+	if (!_texture) SDL_DestroyTexture(_texture);
+	if (!_surface) SDL_FreeSurface(_surface);
+}
+void Player::LoadImg(SDL_Renderer* renderer, SDL_Rect rect, string fileimg)
+{
+	_rect = rect;
+	_pos.x = rect.x;
+	_pos.y = rect.y;
+	_render = renderer;
+	_surface = IMG_Load(fileimg.c_str());
+	_texture = SDL_CreateTextureFromSurface(_render, _surface);
+}
+void Player::ShowImg()
+{
+	SDL_RenderCopy(_render, _texture, NULL, &_rect);
 }

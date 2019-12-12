@@ -3,11 +3,13 @@
 #include <math.h>
 #include <random>
 #include <time.h>   //for random
+//#include"BaseObject.h"
+
 #define SDL_MAIN_HANDLED
 
 #include <SDL.h>
-
-
+#include<SDL_image.h>
+using namespace std;
 class Ball
 {
 // CONST VALUE
@@ -24,13 +26,14 @@ public:
 
 private:
 	// Position
-	Point _center;
+	SDL_Rect _center;
 	int _radius;
 
 
 	// SDL windows
 	SDL_Renderer* _render;
-
+	SDL_Surface* _surface;
+	SDL_Texture* _texture;
 	// Vector speed
 	float _i;
 	float _j;
@@ -44,7 +47,7 @@ private:
 
 // Getter and Setter
 public:
-	Point Center() { return _center; };
+	SDL_Rect Center() { return _center; };
 	int Radius() { return _radius; };
 
 	float AxisI() { return _i; };
@@ -75,6 +78,12 @@ public:
 
 	// Description: Init tha ball with default pos, radius and vector speed
 	Ball(SDL_Renderer* render, Point firstLocation, int radius);
+
+	~Ball();
+
+public:
+	void LoadImg(SDL_Renderer* renderer, SDL_Rect rect, string fileimg);
+	void ShowImg();
 };
 
 // Description: Create and fill a cricle with given RGBA color 

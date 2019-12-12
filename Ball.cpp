@@ -10,7 +10,8 @@ Ball::Ball()
 	_center.y = 0;
 
 	_radius = 5;
-
+	_center.h = _radius * 2;
+	_center.w = _radius * 2;
 	RandIandJ(_i, _j);
 
 	SyncSpeed();
@@ -62,9 +63,11 @@ Ball::Ball(SDL_Renderer* render, Point firstLocation, int radius)
 {
 	_render = render;
 
-	_center = firstLocation;
+	_center.x = firstLocation.x;
+	_center.y = firstLocation.y;
 	_radius = radius;
-
+	_center.h = radius * 2;
+	_center.w = radius * 2;
 	//_i = axisI;
 	//_j = axisJ;
 
@@ -73,6 +76,11 @@ Ball::Ball(SDL_Renderer* render, Point firstLocation, int radius)
 	SyncSpeed();
 }
 
+Ball::~Ball()
+{
+	if (!_texture) SDL_DestroyTexture(_texture);
+	if (!_surface) SDL_FreeSurface(_surface);
+}
 
 void Ball::Move()
 {
@@ -102,6 +110,21 @@ void Ball::LevelUp()
 
 		SyncSpeed();
 	}
+}
+
+void Ball::LoadImg(SDL_Renderer* renderer, SDL_Rect rect, string fileimg)
+{
+	_center = rect;
+
+	_render = renderer;
+
+	_surface = IMG_Load(fileimg.c_str());
+
+	_texture = SDL_CreateTextureFromSurface(_render, _surface);
+}
+void Ball::ShowImg()
+{
+	SDL_RenderCopy(_render, _texture, NULL, &_center);
 }
 
 void Fill_circle(SDL_Renderer* render, int cx, int cy, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a)

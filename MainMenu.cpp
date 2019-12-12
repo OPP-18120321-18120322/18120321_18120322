@@ -1,20 +1,116 @@
-#include "MainMenu.h"
+﻿#include "MainMenu.h"
 
 MainMenu::MainMenu()
 {
 	_initSuccess = InitSDL(_window, _render, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	_pingpong.SetPingPong(_window, _render);
+	_brickball.SetBrickBall(_window, _render, 1280, 720);
 }
 MainMenu::~MainMenu()
 {
 	CloseSDL(_window, _render);
 }
-void MainMenu::Menu()
+void MainMenu::PlayGame()
 {
-	//pingpong.PlayPingPong();
-	cout << "1";
-	_pingpong.PlayPingPong();
-	cout << "2";
+	bool isHandle = true;
+	//bool isInMenu = true;
+	int Selection = -1;
+	while (isHandle)
+	{
+		//Load Menu:
+		Selection = ShowMainMenu();
+		switch (Selection)
+		{
+		case 1:
+			//Chơi mới ->Chọn màn->Nhập tên->Load giao diện->Chơi
+			cout << "1";
+			_pingpong.PlayPingPong();
+			break;
+		case 2:
+			//Chơi lại ->Load dữ liệu cũ ->Tiếp tục chơi
+			cout << "2";
+			_brickball.PlayGame();
+			isHandle = false;
+			break;
+		case 3:
+			//Hiển thị bản thành tích người chơi
+			cout << "3";
+			isHandle = false;
+			break;
+		case 4:
+			//Option điều chỉnh ẩm thanh 
+			cout << "4";
+			isHandle = false;
+			break;
+		case 5:
+			//Huong dan choi 
+			cout << "5";
+			isHandle = false;
+			break; 
+		case 6:
+			//Exit
+			cout << "6";
+			isHandle = false;
+			break;
+		default:
+			break;
+		}
+	}
+}
+int MainMenu::ShowMainMenu()
+{
+	int Mode = -1;
+	bool isInMenu = true;
+	vector<Object> objects;
+	Object Selection;
+	SDL_Event even;
+	objects.push_back(Object::Object(_render, { 0,0,1280,720 }, "image//bkground//bkground.png"));
+	objects.push_back(Object::Object(_render, { 800,100,340,541 }, "image//material//main_menu.png"));
+	objects.push_back(Object::Object(_render, { 875,240,190,40 }, "image//button//button_newgame.png"));
+	objects.push_back(Object::Object(_render, { 875,300,190,40 }, "image//button//button_loadgame.png"));
+	objects.push_back(Object::Object(_render, { 875,360,190,40 }, "image//button//button_highscores.png"));
+	objects.push_back(Object::Object(_render, { 875,420,190,40 }, "image//button//button_option.png"));
+	objects.push_back(Object::Object(_render, { 875,480,190,40 }, "image//button//button_help.png"));
+	objects.push_back(Object::Object(_render, { 875,540,190,40 }, "image//button//button_quit.png"));
+	//objects.push_back(Object::Object(_render, { 0,0,25,25 }, "image//material//ball.png"));
+	Selection.LoadImg(_render, { 875,540,190,40 }, "image//button//button_selected.png");
+	//objects.push_back(Object::Object(_render, { 0,0,190,40 }, "image//button_selected.png"));
+	/*Ball ball;
+	Player player;
+	ball.LoadImg(_render, { 240,540,25,25 }, "image//ball.png");
+	player.LoadImg(_render, { 225,540,17,132 }, "image//Untitled.png");*/
+	while (isInMenu)
+	{
+		
+
+		while (SDL_PollEvent(&even))
+		{
+			for (int i = 2; i < 8; i++)
+			{
+				if (objects[i].ClickMouse(even))
+				{
+					Mode = i-1;
+					Selection.SetRect(objects[i].Rect());
+					Selection.ShowImg();
+					isInMenu = false;
+				}
+			}
+		}
+		//Clear màn hình
+		SDL_RenderClear(_render);
+		for (auto object : objects) object.ShowImg();
+		for (int i = 2; i < 8; i++)
+		{
+			if (objects[i].CheckMouseWithButton(even.motion.x, even.motion.y))
+			{
+				Selection.SetRect(objects[i].Rect());
+				Selection.ShowImg();
+			}
+		}
+		SDL_RenderPresent(_render);
+		SDL_Delay(1000 / DEFAULT_FPS);
+	}
+	return Mode;
 }
 
 bool MainMenu::InitSDL(SDL_Window*& window, SDL_Renderer*& renderer, int SCREEN_WIDTH = DEFAULT_WIDTH, int SCREEN_HEIGHT = DEFAULT_HEIGHT)

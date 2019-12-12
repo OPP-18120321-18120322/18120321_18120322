@@ -1,11 +1,15 @@
 #pragma once
 #include"GamePingPong.h"
-
+#include"BaseObject.h"
+#include<vector>
+#include"GameBrickBall.h"
+using namespace std;
 class MainMenu
 {
 private:
 	bool _initSuccess;
 	PingPong _pingpong;
+	BrickBall _brickball;
 	SDL_Window* _window;
 	SDL_Renderer* _render;
 public:
@@ -27,6 +31,7 @@ public:
 	// Description: Free and close SDL, TTF framework
 	void CloseSDL(SDL_Window*&, SDL_Renderer*&);
 public:
-	void Menu();
+	void PlayGame();
+	int ShowMainMenu();
 };
 
