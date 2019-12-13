@@ -12,6 +12,7 @@
     <ClCompile Include="SDL_TextView.cpp" />
     <ClCompile Include="BaseObject.cpp" />
     <ClCompile Include="GameBrickBall.cpp" />
+    <ClCompile Include="MatchScore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
@@ -25,5 +26,6 @@
     <ClInclude Include="SDL_TextView.h" />
     <ClInclude Include="BaseObject.h" />
     <ClInclude Include="GameBrickBall.h" />
+    <ClInclude Include="MatchScore.h" />
   </ItemGroup>
 </Project>

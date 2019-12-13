@@ -157,6 +157,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="GamePingPong.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="MatchScore.cpp" />
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SDL_TextView.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="LibGame.h" />
     <ClInclude Include="GamePingPong.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="MatchScore.h" />
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SDL_TextView.h" />

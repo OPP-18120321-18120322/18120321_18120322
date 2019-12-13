@@ -1,8 +1,8 @@
 ﻿#include "GameBrickBall.h"
-
+#include "MatchScore.h"
 void BrickBall::Init()
 {
-	_interfaces.push_back(Object::Object(_render, { 0,0,1280,720 },"image//bkground//bk1.png"));
+	_interfaces.push_back(Object::Object(_render, { 0,0,1280,720 },"image//bkground//bk2.png"));
 }
 BrickBall::BrickBall()
 {
@@ -55,6 +55,9 @@ void BrickBall::PlayGame()
 
 	Uint8* keyboardState = const_cast <Uint8*> (SDL_GetKeyboardState(NULL));
 
+	MatchScore Score(_render);
+	int score = -1;
+
 	while (is_playing) 
 	{
 		// Di chuyển thanh trượt 
@@ -84,23 +87,27 @@ void BrickBall::PlayGame()
 			_ball.LevelUp();
 
 		}*/
-		//va chạm tường phải
+		//va chạm tường trai
 		if (_ball.Center().x <= _player.Pos().x + _player.Width())
 		{
 			_ball.Collide(Ball::BORDER_LEFT);
+			//score++;
 		}
 		//va chạm tường phải
 		if (_ball.Center().x >= _width - 2*_ball.Radius() - MARGIN)
 		{
 			_ball.Collide(Ball::BORDER_RIGHT);
+			//score++;
 		}
 
 		//collide wall
 		if (_ball.Center().y <= 0  + MARGIN) {
 			_ball.Collide(Ball::BORDER_TOP);
+			score++;
 		}
 		if (_ball.Center().y >= _height - 2*_ball.Radius() - MARGIN) {
-			_ball.Collide(Ball::BORDER_BOTTOM);
+			_ball.Collide(Ball::BORDER_BOTTOM);+
+			score++;
 		}
 
 		//Va cham nổ
@@ -110,13 +117,16 @@ void BrickBall::PlayGame()
 			is_playing = false;
 		}
 		
+		
+
 		_ball.Move();
 		SDL_RenderClear(_render);
 
 		for (auto interface :_interfaces) interface.ShowImg();
 		_ball.ShowImg();
 		_player.ShowImg();
-
+		Score.CalcScore(score);
+		Score.ShowScore();
 		SDL_RenderPresent(_render);
 		SDL_Delay(1000 / DEFAULT_FPS);
 	}

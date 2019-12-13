@@ -33,6 +33,10 @@ void Object::ShowImg()
 	SDL_RenderCopy(_renderer, _texture, NULL, &_rect);
 }
 
+void Object::ShowImgScore(SDL_Rect &rect) {
+	SDL_RenderCopy(_renderer, _texture, NULL, &rect);
+}
+
 //Xử lý chuột
 bool Object::CheckMouseWithButton(int xmouse, int ymouse)
 {
