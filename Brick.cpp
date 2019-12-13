@@ -19,7 +19,7 @@ Brick::Brick(SDL_Renderer* renderer, int x, int y)
 	_rect.h = BRICK_LENGTH;
 
 	_renderer = renderer;
-	_surface = IMG_Load("brick.png");
+	_surface = IMG_Load("image/material/brick.png");
 	_texture = SDL_CreateTextureFromSurface(_renderer, _surface);
 
 

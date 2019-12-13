@@ -7,7 +7,7 @@ class Maze
 {
 public:
 	//
-	static const int NUMBER_COLUMN = 11;
+	static const int NUMBER_COLUMN = 22;
 	static const int NUMBER_ROW = 10;
 private:
 	//Create value

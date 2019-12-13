@@ -1,5 +1,6 @@
 ﻿#include "GameBrickBall.h"
 #include "MatchScore.h"
+#include "Maze.h"
 void BrickBall::Init()
 {
 	_interfaces.push_back(Object::Object(_render, { 0,0,1280,720 },"image//bkground//bk2.png"));
@@ -56,7 +57,10 @@ void BrickBall::PlayGame()
 	Uint8* keyboardState = const_cast <Uint8*> (SDL_GetKeyboardState(NULL));
 
 	MatchScore Score(_render);
-	int score = -1;
+	int score = 500;
+
+	Maze maze;
+	maze.SetMap(_render, 2);
 
 	while (is_playing) 
 	{
@@ -127,6 +131,7 @@ void BrickBall::PlayGame()
 		_player.ShowImg();
 		Score.CalcScore(score);
 		Score.ShowScore();
+		maze.ShowMap();
 		SDL_RenderPresent(_render);
 		SDL_Delay(1000 / DEFAULT_FPS);
 	}

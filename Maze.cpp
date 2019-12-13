@@ -19,8 +19,7 @@ void Maze::SetMap(SDL_Renderer* renderer, int num) {
 
 		for (j = 0; j < NUMBER_COLUMN; j++)
 		{
-			_bricks[i].push_back(Brick(renderer, 1280 / 4 * 3 - Brick::BRICK_WIDTH * i, 40 + Brick::BRICK_LENGTH * j));
-			//cout << _map[i][j] << " ";
+			_bricks[i].push_back(Brick(renderer, 1280 / 4 * 3 - Brick::BRICK_WIDTH * i, 30 + Brick::BRICK_LENGTH * j));
 			if (_map[i][j] == 1)
 			{
 				_bricks[i][j].SetExist(1);

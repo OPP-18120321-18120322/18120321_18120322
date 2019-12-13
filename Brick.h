@@ -20,11 +20,11 @@ class Brick
 //	static const int BORDER_BOTTOM = 4;
 //	static const int BORDER_CORNER = 5;
 public:
-	static const int BRICK_LENGTH = 60;
+	static const int BRICK_LENGTH = 30;
 	static const int BRICK_WIDTH = 30;
 
 	//
-	static const int NUMBER_COLUMN = 12;
+	static const int NUMBER_COLUMN = 22;
 	static const int NUMBER_ROW = 10;
 private:
 	// Position
