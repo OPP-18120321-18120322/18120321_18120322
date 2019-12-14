@@ -77,7 +77,6 @@ void BrickBall::PlayGame()
 	int speed = 0;
 	is_quit = false;
 
-
 	while (!is_quit) {
 		Mode = ShowMenu();
 		if (Mode == 3)
@@ -128,7 +127,7 @@ void BrickBall::PlayGame()
 				}
 				else if (keyboardState[SDL_SCANCODE_P])
 				{
-					
+					PauseGame();
 				}
 			}
 
@@ -292,7 +291,53 @@ int BrickBall::ShowMenu()
 }
 void BrickBall::PauseGame()
 {
-	
+	int Mode = -1;
+	SDL_Event even;
+	bool IsPause = true;
+	vector<Object> objects;
+	objects.push_back(Object::Object(_render, { (1280 - 340) / 2,(720 - 340) / 2,340,340 }, "image//material//main_menu.png"));
+	objects.push_back(Object::Object(_render, { (1280 - 340) / 2 + 75,300,190,40 }, "image//button//button_newgame.png"));
+	objects.push_back(Object::Object(_render, { (1280 - 340) / 2 + 75,420,190,40 }, "image//button//button_quit.png"));
+
+	Object Selection;
+	Selection.LoadImg(_render, { 875,540,190,40 }, "image//button//button_selected.png");
+	while (IsPause)
+	{
+		while (SDL_PollEvent(&even))
+		{
+			for (int i = 1; i < 3; i++)
+			{
+				if (objects[i].ClickMouse(even))
+				{
+					Mode = i - 1;
+					IsPause = false;
+				}
+			}
+		}
+		
+		SDL_RenderClear(_render);
+
+		for (auto interface :_interfaces) interface.ShowImg();
+
+		_ball.ShowImg();
+		_player.ShowImg();
+		_maze.ShowMap();
+
+		for (auto object : objects) object.ShowImg();
+
+
+		for (int i = 1; i < 3; i++)
+		{
+			if (objects[i].CheckMouseWithButton(even.motion.x, even.motion.y))
+			{
+				Selection.SetRect(objects[i].Rect());
+				Selection.ShowImg();
+			}
+		}
+
+		SDL_RenderPresent(_render);
+		SDL_Delay(1000 / DEFAULT_FPS);
+	}
 }
 void BrickBall::HandleWinLose()
 {
