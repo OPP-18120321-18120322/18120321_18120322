@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include "SDL_TextView.h"
 
 using namespace std;
 struct Info {
@@ -16,15 +17,11 @@ struct Info {
 class Highscores
 {
 public:
-	static const int DEFAULT_WIGHT = 300;
-	static const int DEFAULT_HEIGHT = 60;
-	static const int POS_RANK_X = 484;
-	static const int POS_RANK_Y = 0;
-	static const int POS_Y = 95;
+	static const int DEFAULT_WIGHT = 1280;
+	static const int DEFAULT_HEIGHT = 720;
 private:
-	vector<Object> _ranks;
+	Object _ranks;
 	vector<Info> _players;
-	vector<SDL_Rect> _position;
 
 	SDL_Renderer* _render;
 public:

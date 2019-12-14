@@ -24,6 +24,7 @@ private:
 	SDL_Color _hightLightColor = { 255, 0, 0, 255 };
 	SDL_Color _normalColor = { 0, 255, 0, 255 };
 	SDL_Color _bgWhite = { 255, 255, 255, 255 };
+	SDL_Color _blackColor = { 0, 0, 0, 255 };
 
 	SDL_Surface* _surface;
 	SDL_Texture* _texture;
@@ -42,6 +43,7 @@ public:
 	bool SetFont(string, int);
 	SDL_TextView(SDL_Renderer* renderer, int x, int y, string text, int fontSize, string fontName);
 	SDL_TextView(SDL_Renderer* renderer, int x, int y, string text, int fontSize);
+	SDL_TextView(SDL_Renderer* renderer, int x, int y, string text, int fontSize, string fontName, SDL_Color color);
 	~SDL_TextView();
 
 
