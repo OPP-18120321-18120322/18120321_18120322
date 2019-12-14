@@ -23,33 +23,25 @@ void MainMenu::PlayGame()
 		{
 		case 1:
 			//Chơi mới ->Chọn màn->Nhập tên->Load giao diện->Chơi
-			cout << "1";
 			_pingpong.PlayPingPong();
 			break;
 		case 2:
 			//Chơi lại ->Load dữ liệu cũ ->Tiếp tục chơi
-			cout << "2";
 			_brickball.PlayGame();
-			isHandle = false;
 			break;
 		case 3:
 			//Hiển thị bản thành tích người chơi
-			cout << "3";
-			isHandle = false;
 			break;
 		case 4:
 			//Option điều chỉnh ẩm thanh 
-			cout << "4";
 			isHandle = false;
 			break;
 		case 5:
 			//Huong dan choi 
-			cout << "5";
 			isHandle = false;
 			break; 
 		case 6:
 			//Exit
-			cout << "6";
 			isHandle = false;
 			break;
 		default:
@@ -74,11 +66,7 @@ int MainMenu::ShowMainMenu()
 	objects.push_back(Object::Object(_render, { 875,540,190,40 }, "image//button//button_quit.png"));
 	//objects.push_back(Object::Object(_render, { 0,0,25,25 }, "image//material//ball.png"));
 	Selection.LoadImg(_render, { 875,540,190,40 }, "image//button//button_selected.png");
-	//objects.push_back(Object::Object(_render, { 0,0,190,40 }, "image//button_selected.png"));
-	/*Ball ball;
-	Player player;
-	ball.LoadImg(_render, { 240,540,25,25 }, "image//ball.png");
-	player.LoadImg(_render, { 225,540,17,132 }, "image//Untitled.png");*/
+
 	while (isInMenu)
 	{
 		

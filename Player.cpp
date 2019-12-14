@@ -105,3 +105,10 @@ void Player::ShowImg()
 {
 	SDL_RenderCopy(_render, _texture, NULL, &_rect);
 }
+
+void Player::Restore(Point location)
+{
+	_pos = location;
+	_rect.x = _pos.x;
+	_rect.y = _pos.y;
+}

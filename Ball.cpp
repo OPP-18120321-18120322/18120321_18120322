@@ -23,13 +23,21 @@ void Ball::SyncSpeed()
 	_speed = sqrt((double)_i * (double)_i + (double)_j * (double)_j);
 }
 
-bool Ball::Collide(int DIRECTION)
+bool Ball::Collide(int DIRECTION, int speed_scrollbar)
 {
+	double ratio;
 	switch (DIRECTION)
 	{
 	case BORDER_LEFT: 
 	{	
 		_i = (_i > 0) ? _i : -_i;
+		_j = _j + speed_scrollbar;
+		if (speed_scrollbar != 0)
+		{
+			ratio = _i / _j;
+			_i = sqrt(_speed / (1 + ratio * ratio));
+			_j = _i / ratio;
+		}
 		break;
 	}
 	case BORDER_RIGHT:
@@ -114,6 +122,7 @@ void Ball::LevelUp()
 
 void Ball::LoadImg(SDL_Renderer* renderer, SDL_Rect rect, string fileimg)
 {
+	_radius = rect.h / 2;
 	_center = rect;
 
 	_render = renderer;
@@ -125,6 +134,15 @@ void Ball::LoadImg(SDL_Renderer* renderer, SDL_Rect rect, string fileimg)
 void Ball::ShowImg()
 {
 	SDL_RenderCopy(_render, _texture, NULL, &_center);
+}
+void Ball::Restore(Point location)
+{
+	_center.x = location.x;
+	_center.y = location.y;
+
+	RandIandJ(_i, _j);
+
+	SyncSpeed();
 }
 
 void Fill_circle(SDL_Renderer* render, int cx, int cy, int radius, Uint8 r, Uint8 g, Uint8 b, Uint8 a)

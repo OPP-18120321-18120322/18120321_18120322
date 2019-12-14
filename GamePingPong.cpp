@@ -178,7 +178,8 @@ void PingPong::PlayPingPong()
 	int num;
 	srand((unsigned int)time(NULL));
 	num = 1 + rand() % 5;
-	maze.SetMap(_render, 6);
+	maze.SetMap(_render,"brick.png", 6);
+
 	
 
 
@@ -227,7 +228,7 @@ void PingPong::PlayPingPong()
 		while (_isPlaying)
 		{
 			//play player
-			//check key for move player1
+			//check key for move player1s
 			if (keyboardState[SDL_SCANCODE_S])
 			{
 				if (_player1.Pos().y + _player1.Length() + _player1.Speed() <= _height - MARGIN_BOTTOM)
@@ -443,7 +444,7 @@ bool PingPong::Win(int score)
 		winText = "CPU   Win!!";
 	}
 
-		listText.push_back(SDL_TextView(_render, 400, 170, winText, 80, fontPath));
+	listText.push_back(SDL_TextView(_render, 400, 170, winText, 80, fontPath));
 	
 	listText[listText.size() - 1].SetCenterX(0, _width);
 	
@@ -540,7 +541,7 @@ bool PingPong::Win(int score)
 			int num;
 			srand((unsigned int)time(NULL));
 			num = 1 + rand() % 5;
-			maze.SetMap(_render, num);
+			maze.SetMap(_render,"brick.png", num);
 		}
 		else
 		{

@@ -59,5 +59,6 @@ public:
 public:	
 	void LoadImg(SDL_Renderer* renderer, SDL_Rect rect, string fileimg);
 	void ShowImg(); 
+	void Restore(Point location);
 };
 

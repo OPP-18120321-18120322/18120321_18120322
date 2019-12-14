@@ -9,7 +9,7 @@ Brick::Brick()
 	_rect.h = BRICK_LENGTH;
 }
 
-Brick::Brick(SDL_Renderer* renderer, int x, int y)
+Brick::Brick(SDL_Renderer* renderer,string fileimg, int x, int y)
 {
 	is_exist = false;
 
@@ -19,7 +19,7 @@ Brick::Brick(SDL_Renderer* renderer, int x, int y)
 	_rect.h = BRICK_LENGTH;
 
 	_renderer = renderer;
-	_surface = IMG_Load("brick.png");
+	_surface = IMG_Load(fileimg.c_str());
 	_texture = SDL_CreateTextureFromSurface(_renderer, _surface);
 
 
@@ -38,7 +38,7 @@ void Brick::SetRect(int x, int y)
 	_rect.w = BRICK_WIDTH;
 	_rect.h = BRICK_LENGTH;
 }
-void Brick::SetBrick(SDL_Renderer* renderer, int x, int y)
+void Brick::SetBrick(SDL_Renderer* renderer, string fileimg, int x, int y)
 {
 	is_exist = false;
 
@@ -53,16 +53,16 @@ void Brick::SetBrick(SDL_Renderer* renderer, int x, int y)
 }
 void Brick::Show()
 {
-	if (is_exist)
+	if(is_exist)
 		SDL_RenderCopy(_renderer, _texture, NULL, &_rect);
 }
 
 void Brick::SetExist(int t) {
 	if (t == 0) {
-		this->is_exist = false;
+		is_exist = false;
 	}
 	else {
-		this->is_exist = true;
+		is_exist = true;
 	}
 }
 

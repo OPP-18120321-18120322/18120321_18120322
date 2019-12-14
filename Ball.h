@@ -54,12 +54,13 @@ public:
 	float AxisJ() { return _j; };
 	int Speed() { return (int)_speed; };
 
+	
 
 // method
 public:
 
 	// Description: Directional the vector speed to right way 
-	bool Collide(int);
+	bool Collide(int, int = 0);
 
 	// Description: Make the ball move one step 
 	void Move();
@@ -84,6 +85,7 @@ public:
 public:
 	void LoadImg(SDL_Renderer* renderer, SDL_Rect rect, string fileimg);
 	void ShowImg();
+	void Restore(Point);
 };
 
 // Description: Create and fill a cricle with given RGBA color 
