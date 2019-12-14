@@ -1,10 +1,11 @@
 ﻿#include "MainMenu.h"
-
+#include "Highscores.h"
 MainMenu::MainMenu()
 {
 	_initSuccess = InitSDL(_window, _render, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	_pingpong.SetPingPong(_window, _render);
 	_brickball.SetBrickBall(_window, _render, 1280, 720);
+	interface.LoadImg(_render, { 0,0,1280,720 }, "image//bkground//bk3.png");
 }
 MainMenu::~MainMenu()
 {
@@ -15,6 +16,7 @@ void MainMenu::PlayGame()
 	bool isHandle = true;
 	//bool isInMenu = true;
 	int Selection = -1;
+	Highscores rank(_render);
 	while (isHandle)
 	{
 		//Load Menu:
@@ -35,6 +37,9 @@ void MainMenu::PlayGame()
 		case 3:
 			//Hiển thị bản thành tích người chơi
 			cout << "3";
+			rank.ReadFile("players.txt");
+			interface.ShowImg();
+			rank.ShowHighscores();
 			isHandle = false;
 			break;
 		case 4:
@@ -64,7 +69,7 @@ int MainMenu::ShowMainMenu()
 	vector<Object> objects;
 	Object Selection;
 	SDL_Event even;
-	objects.push_back(Object::Object(_render, { 0,0,1280,720 }, "image//bkground//bkground.png"));
+	objects.push_back(Object::Object(_render, { 0,0,1280,720 }, "image//bkground//bk3.png"));
 	objects.push_back(Object::Object(_render, { 800,100,340,541 }, "image//material//main_menu.png"));
 	objects.push_back(Object::Object(_render, { 875,240,190,40 }, "image//button//button_newgame.png"));
 	objects.push_back(Object::Object(_render, { 875,300,190,40 }, "image//button//button_loadgame.png"));

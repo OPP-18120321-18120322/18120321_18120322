@@ -52,6 +52,6 @@ void MatchScore::CalcScore(int score) {
 void MatchScore::ShowScore() {
 	for (int i = 0; i < 3; i++) {
 		//cout << _scores[i] << endl;
-		_number[_scores[i]].ShowImgScore(_position[i]);
+		_number[_scores[i]].ShowImgWithRect(_position[i]);
 	}
 }

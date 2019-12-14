@@ -27,7 +27,7 @@ public:
 	void LoadImg(SDL_Renderer* renderer, SDL_Rect rect, string fileimg);
 	void ShowImg();
 
-	void ShowImgScore(SDL_Rect &rect);
+	void ShowImgWithRect(SDL_Rect &rect);
 
 	//Xử lý chuột 
 	bool CheckMouseWithButton(int xmouse, int ymouse);

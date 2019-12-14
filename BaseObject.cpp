@@ -33,7 +33,7 @@ void Object::ShowImg()
 	SDL_RenderCopy(_renderer, _texture, NULL, &_rect);
 }
 
-void Object::ShowImgScore(SDL_Rect &rect) {
+void Object::ShowImgWithRect(SDL_Rect &rect) {
 	SDL_RenderCopy(_renderer, _texture, NULL, &rect);
 }
 

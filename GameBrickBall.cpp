@@ -57,7 +57,7 @@ void BrickBall::PlayGame()
 	Uint8* keyboardState = const_cast <Uint8*> (SDL_GetKeyboardState(NULL));
 
 	MatchScore Score(_render);
-	int score = 500;
+	int score = 0;
 
 	Maze maze;
 	maze.SetMap(_render, 2);

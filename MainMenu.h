@@ -12,6 +12,7 @@ private:
 	BrickBall _brickball;
 	SDL_Window* _window;
 	SDL_Renderer* _render;
+	Object interface;
 public:
 	// const 
 	static const int DEFAULT_WIDTH = 1280;
