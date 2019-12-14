@@ -1,35 +1,55 @@
 ﻿#include "GameBrickBall.h"
+
 #include "MatchScore.h"
 #include "Maze.h"
-void BrickBall::Init()
+
+void BrickBall::InitData()
 {
-	_interfaces.push_back(Object::Object(_render, { 0,0,1280,720 },"image//bkground//bk2.png"));
+	is_playing = true;
+	heart = 3;
+
+	_ball.LoadImg(_render, { BORDER_LEFT + MARGIN + 21,(_height - 132) / 2 + 56,20,20 }, "image//material//ball.png");
+	_player.LoadImg(_render, { BORDER_LEFT + MARGIN,(_height - 132) / 2,21,132 }, "image//material//scrollbar.png");
+
+	_maze.SetMap(_render, "image//material//item5.png", 5);
+
+	img_hearts.push_back(Object::Object(_render, { 60,390,35,35 }, "image//material//heart.png"));
+	img_hearts.push_back(Object::Object(_render, { 105,390,35,35 }, "image//material//heart.png"));
+	img_hearts.push_back(Object::Object(_render, { 150,390,35,35 }, "image//material//heart.png"));
+}
+
+void BrickBall::RestoreData()
+{
+	is_playing = true;
+	heart = 3;
+	_ball.Restore({ BORDER_LEFT + MARGIN + 21,(_height - 132) / 2 + 56 });
+	_player.Restore({ BORDER_LEFT + MARGIN,(_height - 132) / 2 });
+	_maze.SetMap(_render, "image//material//item5.png", 5);
+	_score = 0;
+
 }
 BrickBall::BrickBall()
 {
 	_width = DEFAULT_WIDTH;
 	_height = DEFAULT_HEIGHT;
-
-
-	_ball.LoadImg(_render, { 280,0,25,25 }, "image//material//ball.png");
-	_player.LoadImg(_render, { BORDER_LEFT + MARGIN,(_height - 132) / 2,21,132 }, "image//material//scrollbar.png");
-
-	Init();
+	_score = 0;
 }
+
 BrickBall::BrickBall(SDL_Window*& window, SDL_Renderer*& renderer, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT)
 {
 	_width = width;
 	_height = height;
+	_score = 0;
 
 	_window = window;
 	_render = renderer;
 
-	_ball.LoadImg(_render, { 280,MARGIN,25,25 }, "image//material//ball.png");
-	_player.LoadImg(_render, { BORDER_LEFT + MARGIN,(_height - 132) / 2,21,132 }, "image//material//scrollbar.png");
+	_interfaces.push_back(Object::Object(_render, { 0,0,1280,720 }, "image//bkground//bk2.png"));
 
-	Init();
+	InitData();
 
 }
+
 void BrickBall::SetBrickBall(SDL_Window*& window, SDL_Renderer*& renderer, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT)
 {
 	_window = window;
@@ -37,102 +57,309 @@ void BrickBall::SetBrickBall(SDL_Window*& window, SDL_Renderer*& renderer, int w
 
 	_width = width;
 	_height = height;
+	_score = 0;
 
 	_window = window;
 	_render = renderer;
 
-	_ball.LoadImg(_render, { 280,MARGIN,25,25 }, "image//material//ball.png");
-	_player.LoadImg(_render, { BORDER_LEFT + MARGIN,(_height-132)/2,21,132 }, "image//material//scrollbar.png");
-	Init();
-	
+	_interfaces.push_back(Object::Object(_render, { 0,0,1280,720 }, "image//bkground//bk2.png"));
+
+	InitData();
 }
+
 BrickBall::~BrickBall()
 {
 	//do st
 }
+
 void BrickBall::PlayGame()
 {
-	bool is_playing = true;
 
+	SDL_Event e;
+	int Mode;
+	bool isPressed = false;
 	Uint8* keyboardState = const_cast <Uint8*> (SDL_GetKeyboardState(NULL));
-
+	int speed = 0;
+	is_quit = false;
 	MatchScore Score(_render);
-	int score = 0;
 
-	Maze maze;
-	maze.SetMap(_render, 2);
+	while 
+		(!is_quit) {
+		Mode = ShowMenu();
+		if (Mode == 3)
 
-	while (is_playing) 
+		{
+			is_quit = true;
+			break;
+		}
+		while (is_playing)
+		{
+
+			// Di chuyển thanh trượt 
+			while (SDL_PollEvent(&e) != 0)
+			{
+				switch (e.type)
+				{
+
+				case SDL_KEYDOWN: {
+					isPressed = true;
+					break;
+				}
+				case SDL_KEYUP: {
+					isPressed = false;
+					speed = 0;
+					break;
+				}
+				default:
+					break;
+				}
+
+			}
+			if (isPressed)
+			{
+				if (keyboardState[SDL_SCANCODE_S])
+				{
+					if (_player.Pos().y + _player.Length() + _player.Speed() <= _height - MARGIN)
+					{
+						_player.Move(Player::MOVE_DOWN);
+						speed = _player.Speed();
+					}
+				}
+				else if (keyboardState[SDL_SCANCODE_W])
+				{
+					if (_player.Pos().y - _player.Speed() >= 0 + MARGIN)
+					{
+						_player.Move(Player::MOVE_UP);
+						speed = -_player.Speed();
+					}
+				}
+				else if (keyboardState[SDL_SCANCODE_P])
+				{
+					PauseGame();
+				}
+			}
+
+			//Va chạm thanh trượt 
+			if (_ball.Center().x <= _player.Pos().x + _player.Width() && _ball.Center().y + _ball.Radius() >= _player.Pos().y && _ball.Center().y + _ball.Radius() <= _player.Pos().y + _player.Length())
+			{
+				//_ball.Collide(Ball::BORDER_LEFT, speed);
+				_ball.Collide(Ball::BORDER_LEFT, 0);
+				_ball.LevelUp();
+				speed = 0;
+
+			}
+
+			if (_ball.Center().x >= _width - 2 * _ball.Radius() - MARGIN)
+			{
+				_ball.Collide(Ball::BORDER_RIGHT);
+			}
+
+			//collide wall
+			if (_ball.Center().y <= 0 + MARGIN) {
+				_ball.Collide(Ball::BORDER_TOP);
+			}
+			if (_ball.Center().y >= _height - 2 * _ball.Radius() - MARGIN) {
+				_ball.Collide(Ball::BORDER_BOTTOM);
+			}
+			//Va cham gach
+			HandleCollideBrick();
+			cout << _score << endl;
+			Score.CalcScore(_score);
+			
+			//Va cham nổ
+			if (_ball.Center().x <= _player.Pos().x && (_ball.Center().y +_ball.Radius() < _player.Pos().y || _ball.Center().y + _ball.Radius() > _player.Pos().y + _player.Length()))
+			{
+				heart--;
+				if (heart <= 0)
+				{
+					is_playing = false;
+					continue;
+				}
+				_ball.Restore({ _player.Pos().x+_player.Width(),_player.Pos().y+_player.Length()/2-_ball.Radius()});
+			}
+			if (is_playing == false)
+			{
+				HandleWinLose();
+				continue;
+			}
+
+			_ball.Move();
+			SDL_RenderClear(_render);
+
+			for (auto interface :_interfaces) interface.ShowImg();
+			_ball.ShowImg();
+			_player.ShowImg();
+			_maze.ShowMap();
+			Score.ShowScore();
+			for (int i = 0; i < heart; i++)
+			{
+				img_hearts[i].ShowImg();
+			}
+			SDL_RenderPresent(_render);
+			SDL_Delay(1000 / DEFAULT_FPS);
+
+		}
+		RestoreData();
+	}
+}
+void BrickBall::HandleCollideBrick()
+{
+	
+
+	int count = 0;
+	vector<Brick> brick;
+	for (int i = 0; i < Maze::NUMBER_ROW; i++)
 	{
-		// Di chuyển thanh trượt 
-		if (keyboardState[SDL_SCANCODE_S])
+		brick = _maze.MazeBrick(i);
+		for (int j = 0; j < Maze::NUMBER_COLUMN; j++)
 		{
-			cout << "1";
-			if (_player.Pos().y + _player.Length() + _player.Speed() <= _height - MARGIN)
+			if (brick[j].IsExist())
 			{
-				_player.Move(Player::MOVE_DOWN);
+
+				if (_ball.Center().x + 2 * _ball.Radius() >= brick[j].Pos().x && _ball.Center().x + 2 * _ball.Radius() <= brick[j].Pos().x + Brick::BRICK_LENGTH
+					&& _ball.Center().y + _ball.Radius() >= brick[j].Pos().y && _ball.Center().y + _ball.Radius() <= brick[j].Pos().y + Brick::BRICK_LENGTH)
+				{
+
+					_ball.Collide(Ball::BORDER_RIGHT);
+					_maze.MazeBrick(i)[j].SetExist(0);
+					_score += 3;
+					break;
+				}
+				else if (_ball.Center().x >= brick[j].Pos().x && _ball.Center().x <= brick[j].Pos().x + Brick::BRICK_LENGTH
+					&& _ball.Center().y + _ball.Radius() >= brick[j].Pos().y && _ball.Center().y + _ball.Radius() <= brick[j].Pos().y + Brick::BRICK_LENGTH)
+				{
+					_ball.Collide(Ball::BORDER_LEFT);
+					_maze.MazeBrick(i)[j].SetExist(0);
+					_score += 3;
+					break;
+				}
+				else if (_ball.Center().x + _ball.Radius() >= brick[j].Pos().x && _ball.Center().x + _ball.Radius() <= brick[j].Pos().x + Brick::BRICK_LENGTH
+					&& _ball.Center().y >= brick[j].Pos().y && _ball.Center().y <= brick[j].Pos().y + Brick::BRICK_LENGTH)
+				{
+					_ball.Collide(Ball::BORDER_TOP);
+					_maze.MazeBrick(i)[j].SetExist(0);
+					_score += 3;
+					break;
+				}
+				else if (_ball.Center().x + _ball.Radius() >= brick[j].Pos().x && _ball.Center().x + _ball.Radius() <= brick[j].Pos().x + Brick::BRICK_LENGTH
+					&& _ball.Center().y + 2 * _ball.Radius() >= brick[j].Pos().y && _ball.Center().y + 2 * _ball.Radius() <= brick[j].Pos().y + Brick::BRICK_LENGTH)
+				{
+					_ball.Collide(Ball::BORDER_BOTTOM);
+					_maze.MazeBrick(i)[j].SetExist(0);
+					_score += 3;
+					break;
+				}
+			}
+			else
+				count++;
+			if (count >= Maze::NUMBER_COLUMN * Maze::NUMBER_ROW)
+			{
+				is_playing = false;
 			}
 		}
-		else if (keyboardState[SDL_SCANCODE_W])
+	}
+}
+int BrickBall::ShowMenu()
+{
+	int Mode = -1;
+	SDL_Event even;
+	bool isInMenu = true;
+	vector<Object> objects;
+	objects.push_back(Object::Object(_render, { 0,0,1280,720 }, "image//bkground//bk.png"));
+	objects.push_back(Object::Object(_render, { (1280 - 340) / 2,(720 - 340) / 2,340,340 }, "image//material//main_menu.png"));
+	objects.push_back(Object::Object(_render, { (1280 - 340) / 2 + 75,300,190,40 }, "image//button//button_newgame.png"));
+	objects.push_back(Object::Object(_render, { (1280 - 340) / 2 + 75,360,190,40 }, "image//button//button_loadgame.png"));
+	objects.push_back(Object::Object(_render, { (1280 - 340) / 2 + 75,420,190,40 }, "image//button//button_quit.png"));
+
+	Object Selection;
+	Selection.LoadImg(_render, { 875,540,190,40 }, "image//button//button_selected.png");
+
+
+	while (isInMenu)
+	{
+		while (SDL_PollEvent(&even))
 		{
-			cout << "2";
-			if (_player.Pos().y - _player.Speed() >= 0 + MARGIN)
+			for (int i = 2; i < 5; i++)
 			{
-				_player.Move(Player::MOVE_UP);
+				if (objects[i].ClickMouse(even))
+				{
+					Mode = i - 1;
+					isInMenu = false;
+				}
 			}
-		}
 
-		//Va chạm thanh trượt 
-		/*if (_ball.Center().x <= _player.Pos().x + _player.Width()
-			&& _ball.Center().y >= _player.Pos().y
-			&& _ball.Center().y <= _player.Pos().y + _player.Length())
-		{
-			_ball.Collide(Ball::BORDER_LEFT);
-			_ball.LevelUp();
-
-		}*/
-		//va chạm tường trai
-		if (_ball.Center().x <= _player.Pos().x + _player.Width())
-		{
-			_ball.Collide(Ball::BORDER_LEFT);
-			//score++;
 		}
-		//va chạm tường phải
-		if (_ball.Center().x >= _width - 2*_ball.Radius() - MARGIN)
-		{
-			_ball.Collide(Ball::BORDER_RIGHT);
-			//score++;
-		}
-
-		//collide wall
-		if (_ball.Center().y <= 0  + MARGIN) {
-			_ball.Collide(Ball::BORDER_TOP);
-			score++;
-		}
-		if (_ball.Center().y >= _height - 2*_ball.Radius() - MARGIN) {
-			_ball.Collide(Ball::BORDER_BOTTOM);+
-			score++;
-		}
-
-		//Va cham nổ
-		if (_ball.Center().x <= _player.Pos().x && _ball.Center().y <= _player.Pos().y
-			&& _ball.Center().y >= _player.Pos().y + _player.Length()) {
-			cout << "1";
-			is_playing = false;
-		}
-		
-		
-
-		_ball.Move();
+		//Clear màn hình
 		SDL_RenderClear(_render);
+		for (auto object : objects) object.ShowImg();
+		for (int i = 2; i < 5; i++)
+		{
 
-		for (auto interface :_interfaces) interface.ShowImg();
-		_ball.ShowImg();
-		_player.ShowImg();
-		Score.CalcScore(score);
-		Score.ShowScore();
-		maze.ShowMap();
+			if (objects[i].CheckMouseWithButton(even.motion.x, even.motion.y))
+			{
+				Selection.SetRect(objects[i].Rect());
+				Selection.ShowImg();
+			}
+
+		}
 		SDL_RenderPresent(_render);
 		SDL_Delay(1000 / DEFAULT_FPS);
 	}
+	return Mode;
+}
+void BrickBall::PauseGame()
+{
+	int Mode = -1;
+	SDL_Event even;
+	bool IsPause = true;
+	vector<Object> objects;
+	objects.push_back(Object::Object(_render, { (1280 - 340) / 2,(720 - 340) / 2,340,340 }, "image//material//main_menu.png"));
+	objects.push_back(Object::Object(_render, { (1280 - 340) / 2 + 75,300,190,40 }, "image//button//button_newgame.png"));
+	objects.push_back(Object::Object(_render, { (1280 - 340) / 2 + 75,420,190,40 }, "image//button//button_quit.png"));
+
+	Object Selection;
+	Selection.LoadImg(_render, { 875,540,190,40 }, "image//button//button_selected.png");
+	while (IsPause)
+	{
+		while (SDL_PollEvent(&even))
+		{
+			for (int i = 1; i < 3; i++)
+			{
+				if (objects[i].ClickMouse(even))
+				{
+					Mode = i - 1;
+					IsPause = false;
+				}
+			}
+		}
+		
+
+		SDL_RenderClear(_render);
+
+		for (auto interface :_interfaces) interface.ShowImg();
+
+		_ball.ShowImg();
+		_player.ShowImg();
+		_maze.ShowMap();
+
+		for (auto object : objects) object.ShowImg();
+
+
+		for (int i = 1; i < 3; i++)
+		{
+			if (objects[i].CheckMouseWithButton(even.motion.x, even.motion.y))
+			{
+				Selection.SetRect(objects[i].Rect());
+				Selection.ShowImg();
+			}
+		}
+
+
+		SDL_RenderPresent(_render);
+		SDL_Delay(1000 / DEFAULT_FPS);
+	}
+}
+void BrickBall::HandleWinLose()
+{
+	;
 }

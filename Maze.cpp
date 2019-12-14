@@ -8,7 +8,7 @@ Maze::Maze() {
 	}
 }
 
-void Maze::SetMap(SDL_Renderer* renderer, int num) {
+void Maze::SetMap(SDL_Renderer* renderer,string fileimg, int num) {
 	int i, j;
 	string filename;
 	string type;
@@ -19,7 +19,10 @@ void Maze::SetMap(SDL_Renderer* renderer, int num) {
 
 		for (j = 0; j < NUMBER_COLUMN; j++)
 		{
-			_bricks[i].push_back(Brick(renderer, 1280 / 4 * 3 - Brick::BRICK_WIDTH * i, 30 + Brick::BRICK_LENGTH * j));
+
+			_bricks[i].push_back(Brick(renderer, fileimg, 1280 / 4 * 3 - Brick::BRICK_WIDTH * i, Brick::BRICK_LENGTH * j + MARGIN));
+			//cout << _map[i][j] << " ";
+
 			if (_map[i][j] == 1)
 			{
 				_bricks[i][j].SetExist(1);
@@ -35,6 +38,7 @@ void Maze::ShowMap()
 	for (int i = 0; i < NUMBER_ROW; i++)
 	{
 		for (auto brick : _bricks[i]) brick.Show();
+		
 	}
 }
 

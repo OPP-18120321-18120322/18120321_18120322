@@ -1,13 +1,13 @@
 ﻿#pragma once
 
 #define SDL_MAIN_HANDLED
+
 #include"Player.h"
 #include"Ball.h"
 #include <vector>
 #include"BaseObject.h"
 #include "SDL_TextView.h"
-
-#define SDL_MAIN_HANDLED
+#include"Maze.h"
 
 using namespace std;
 class BrickBall
@@ -25,20 +25,33 @@ private:
 	Player _player;
 	Ball _ball;
 	vector<Object> _interfaces;
+	vector<Object> img_hearts;
+	
+	Maze _maze;
 
 	//SDL Framework
 	SDL_Window* _window;
 	SDL_Renderer* _render;
 
+	
+	int heart;
+	bool is_playing;
+	bool is_quit;
+	int _score;
 	int _width;
 	int _height;
 public:
-	void Init();
+	void InitData();
+	void RestoreData();
 	BrickBall();
 	BrickBall(SDL_Window*& window, SDL_Renderer*& renderer, int, int);
 	~BrickBall();
 	void SetBrickBall(SDL_Window*& window, SDL_Renderer*& renderer,int ,int);
 public:
+	void PauseGame();
+	void HandleWinLose();
+	int ShowMenu();
+	void HandleCollideBrick();
 	void PlayGame();
 };
 
