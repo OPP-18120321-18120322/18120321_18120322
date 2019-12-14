@@ -126,6 +126,10 @@ void BrickBall::PlayGame()
 						speed = -_player.Speed();
 					}
 				}
+				else if (keyboardState[SDL_SCANCODE_P])
+				{
+					
+				}
 			}
 
 			//Va chạm thanh trượt 
@@ -184,7 +188,6 @@ void BrickBall::PlayGame()
 			SDL_Delay(1000 / DEFAULT_FPS);
 
 		}
-		cout << _score;
 		RestoreData();
 	}
 }
@@ -286,6 +289,10 @@ int BrickBall::ShowMenu()
 		SDL_Delay(1000 / DEFAULT_FPS);
 	}
 	return Mode;
+}
+void BrickBall::PauseGame()
+{
+	
 }
 void BrickBall::HandleWinLose()
 {

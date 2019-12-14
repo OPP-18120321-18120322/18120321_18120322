@@ -48,6 +48,7 @@ public:
 	~BrickBall();
 	void SetBrickBall(SDL_Window*& window, SDL_Renderer*& renderer,int ,int);
 public:
+	void PauseGame();
 	void HandleWinLose();
 	int ShowMenu();
 	void HandleCollideBrick();
