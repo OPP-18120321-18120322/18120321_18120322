@@ -4,7 +4,9 @@
 Highscores::Highscores(SDL_Renderer*& renderer) {
 	_render = renderer;
 
+
 	_ranks.LoadImg(_render, { 0,0,SCREEN_WIDTH,SCREEN_HEIGHT }, "image//material//highscores.png");
+
 }
 
 Info Highscores::ReadInfo(string info) {
@@ -58,6 +60,7 @@ void Highscores::WriteFile(Info data,string name_file)
 }
 void Highscores::ShowHighscores() {
 	int count = _players.size();
+
 	bool isInRank = true;
 
 	Object buttonclose;

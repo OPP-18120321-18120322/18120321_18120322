@@ -170,6 +170,8 @@ SDL_TextView::SDL_TextView(SDL_Renderer* renderer, int x, int y, string text, in
 
 
 }
+
+
 SDL_TextView::~SDL_TextView()
 {
 	if (!_texture) SDL_DestroyTexture(_texture);

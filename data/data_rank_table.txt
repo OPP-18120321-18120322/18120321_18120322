@@ -4,7 +4,7 @@ thanh,999
 huynh,999
 thien duc,999
 huynh duc,999
-duc,999
-Nam,111
-Nam,111
-Nam,111
+duc,23
+Nam,15
+Nam,11
+Nam,10

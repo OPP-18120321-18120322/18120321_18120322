@@ -8,9 +8,15 @@
 #include"BaseObject.h"
 #include "SDL_TextView.h"
 #include"Maze.h"
-#include<time.h>
+
+#include <time.h>
+#include <SDL_timer.h>
 #include"SDL_mixer.h"
 #include"HighScores.h"
+
+#include "Time.h"
+
+
 using namespace std;
 class BrickBall
 {
@@ -47,6 +53,7 @@ private:
 	
 	int _width;
 	int _height;
+
 	int num;
 	bool start;
 	

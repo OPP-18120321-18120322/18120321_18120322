@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include <iostream>
 
 #define SDL_MAIN_HANDLED
@@ -24,6 +24,7 @@ private:
 	SDL_Color _hightLightColor = { 255, 0, 0, 255 };
 	SDL_Color _normalColor = { 0, 255, 0, 255 };
 	SDL_Color _bgWhite = { 255, 255, 255, 255 };
+	SDL_Color _blackColor = { 0, 0, 0, 255 };
 
 	SDL_Surface* _surface;
 	SDL_Texture* _texture;

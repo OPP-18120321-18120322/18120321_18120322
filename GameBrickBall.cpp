@@ -122,7 +122,7 @@ BrickBall::~BrickBall()
 
 void BrickBall::PlayGame()
 {
-
+	Time time;
 	SDL_Event e;
 	int Mode;
 	bool isPressed = false;
@@ -134,16 +134,20 @@ void BrickBall::PlayGame()
 	while (!is_quit) 
 	{
 		ShowMenu();
+		
 		while (is_playing)
 		{
-			while (start)
+			
+			if(start)
 			{
+				
 				chunk = Mix_LoadWAV("sound//GetReady.wav");
 				Mix_PlayChannel(-1, chunk, 0);
 				SDL_Delay(200);
 				chunk = Mix_LoadWAV("sound//hieulenh.wav");
 				Mix_PlayChannel(-1, chunk, 0);
 				Object wait;
+
 				for (int i = 3; i >= 1; i--)
 				{
 					wait.LoadImg(_render, { 0,0,1280,720 }, "image//material//wait_" + to_string(i) + ".png");
@@ -159,12 +163,15 @@ void BrickBall::PlayGame()
 						img_hearts[i].ShowImg();
 					}
 					wait.ShowImg();
+					//time.ShowTime();
 					SDL_RenderPresent(_render);
 					SDL_Delay(1000);
 				}
 				Mix_PlayMusic(music, -1);
 				start = false;
+				time.StartTime(_render);
 			}
+			
 			// Di chuyển thanh trượt 
 			while (SDL_PollEvent(&e) != 0)
 			{
@@ -205,10 +212,12 @@ void BrickBall::PlayGame()
 				}
 				else if (keyboardState[SDL_SCANCODE_P])
 				{
+					time.PausedTime();
 					PauseGame();
+					time.UnpausedTime();
 				}
 			}
-
+			
 			//Va chạm thanh trượt 
 			if (_ball.Center().x  <= _player.Pos().x + _player.Width() + _ball.Radius() && _ball.Center().y - _ball.Radius() >= _player.Pos().y && _ball.Center().y - _ball.Radius() <= _player.Pos().y + _player.Length())
 			{
@@ -254,7 +263,9 @@ void BrickBall::PlayGame()
 					_ball.Restore({ _player.Pos().x + _player.Width(),_player.Pos().y + _player.Length() / 2 - _ball.Radius() });
 				}
 			}
+
 			_ball.Move();
+
 			SDL_RenderClear(_render);
 
 			for (auto interface :_interfaces) interface.ShowImg();
@@ -262,6 +273,7 @@ void BrickBall::PlayGame()
 			_ball.ShowImg();
 			_player.ShowImg();
 			_maze.ShowMap();
+			time.ShowTime();
 			for (int i = 0; i < heart; i++)
 			{
 				img_hearts[i].ShowImg();
@@ -451,7 +463,6 @@ void BrickBall::PauseGame()
 		_ball.ShowImg();
 		_player.ShowImg();
 		_maze.ShowMap();
-
 		for (auto object : objects) object.ShowImg();
 
 
@@ -495,6 +506,7 @@ void BrickBall::SaveGame()
 }
 void BrickBall::HandleWinLose()
 {
+
 	int Mode = -1;
 	SDL_Event even;
 	bool IsWinLose = true;
@@ -591,3 +603,45 @@ void BrickBall::ShowImg()
 	SDL_RenderPresent(_render);
 	SDL_Delay(1000 / DEFAULT_FPS);
 }
+
+//void BrickBall::StartCountdown() {
+//	//_time_start = SDL_GetTicks();
+//	_time_countdown = 30000;
+//}
+//
+//void BrickBall::StopCountdown() {
+//
+//}
+//
+//int BrickBall::GetTime() {
+//	return (_time_countdown - SDL_GetTicks())/ 1000;
+//
+//	//if (_time_countdown - SDL_GetTicks() )
+//}
+//
+//void BrickBall::ShowTime() {
+//	string text_time;
+//	int time;
+//	string fontPath = "Lib\\font\\MTO Yikes.ttf";
+//	time = GetTime();
+//
+//	if (time < 1) {
+//		_time = SDL_GetTicks() - _time;
+//		//_time_countdown += _time_countdown;
+//		text_time = "00 : 00";
+//	}
+//
+//	if (time < 10) {
+//		text_time = "00 : 0" + to_string(time);
+//	}
+//
+//
+//	if (time >= 10) {
+//		text_time = "00 : " + to_string(time % 30);
+//	}
+//
+//	SDL_TextView text(_render, 85, 450, text_time, 28, fontPath, { 255,0,0,255 });
+//
+//	text.Show();
+//}
+
