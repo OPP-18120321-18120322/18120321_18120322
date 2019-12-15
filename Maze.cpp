@@ -20,12 +20,15 @@ void Maze::SetMap(SDL_Renderer* renderer,string fileimg, int num) {
 		for (j = 0; j < NUMBER_COLUMN; j++)
 		{
 
-			_bricks[i].push_back(Brick(renderer, fileimg, 1280 / 4 * 3 - Brick::BRICK_WIDTH * i, Brick::BRICK_LENGTH * j + MARGIN));
-			//cout << _map[i][j] << " ";
+			_bricks[i].push_back(Brick(renderer, fileimg, 1280 / 5 * 4 - Brick::BRICK_WIDTH * i, Brick::BRICK_LENGTH * j + MARGIN));
 
 			if (_map[i][j] == 1)
 			{
 				_bricks[i][j].SetExist(1);
+			}
+			else if(_map[i][j] == 0)
+			{
+				_bricks[i][j].SetExist(0);
 			}
 		}
 		//cout << endl;
@@ -41,7 +44,17 @@ void Maze::ShowMap()
 		
 	}
 }
-
+void Maze::WriteData(string filename)
+{
+	fstream file(filename, ios::out);
+	for (int i = 0; i < NUMBER_ROW; i++) {
+		for (int j = 0; j < NUMBER_COLUMN; j++) {
+			file<< _bricks[i][j].IsExist()<<" ";
+		}
+		file << endl;
+	}
+	file.close();
+}
 void Maze::ReadFileMaze(string filename) {
 	ifstream file_in(filename);
 

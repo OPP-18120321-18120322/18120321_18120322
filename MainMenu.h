@@ -1,11 +1,18 @@
 #pragma once
+
+
+#define SDL_MAIN_HANDLED
 #include"GamePingPong.h"
 #include"BaseObject.h"
 #include<vector>
 #include"GameBrickBall.h"
+#include"SDL_mixer.h"
 using namespace std;
 class MainMenu
 {
+private:
+	//test
+	Mix_Music* music = NULL;
 private:
 	bool _initSuccess;
 	PingPong _pingpong;
