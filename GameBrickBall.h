@@ -10,6 +10,7 @@
 #include"Maze.h"
 #include<time.h>
 #include"SDL_mixer.h"
+#include"HighScores.h"
 using namespace std;
 class BrickBall
 {
@@ -37,14 +38,18 @@ private:
 	Mix_Music* music = NULL;
 	Mix_Chunk* chunk = NULL;
 
+	Info _info;
 	int heart;
+	int _score;
+
 	bool is_playing;
 	bool is_quit;
-	int _score;
+	
 	int _width;
 	int _height;
 	int num;
 	bool start;
+	
 public:
 	void InitData();
 	bool LoadData();

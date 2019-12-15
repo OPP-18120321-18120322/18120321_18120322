@@ -3,10 +3,15 @@
 MainMenu::MainMenu()
 {
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+	turn_on = true;
+
 	_initSuccess = InitSDL(_window, _render, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+
 	_pingpong.SetPingPong(_window, _render);
 	_brickball.SetBrickBall(_window, _render, 1280, 720);
 	interface.LoadImg(_render, { 0,0,1280,720 }, "image//bkground//bk3.png");
+
+	
 }
 MainMenu::~MainMenu()
 {
@@ -29,23 +34,17 @@ void MainMenu::PlayGame()
 			_brickball.PlayGame();
 			break;
 		case 2:
+
+		case 3:
 			//Hiển thị bản thành tích người chơi
 			cout << "3";
-			rank.ReadFile("players.txt");
+			rank.ReadFile("data//data_rank_table.txt");
 			interface.ShowImg();
 			rank.ShowHighscores();
-			isHandle = false;
-			break;
-		case 3:
-			
-
-			//Option điều chỉnh ẩm thanh 
-			isHandle = false;
-
 			break;
 		case 4:
-			//Huong dan choi 
-			isHandle = false;
+			//Option điều chỉnh ẩm thanh 
+			AdjustVolume();
 			break;
 		case 5:
 			//Exit
@@ -76,17 +75,17 @@ int MainMenu::ShowMainMenu()
 	Mix_PlayMusic(music, -1);
 	while (isInMenu)
 	{
-		
+
 		while (SDL_PollEvent(&even))
 		{
 			for (int i = 2; i < 7; i++)
 			{
 				if (objects[i].ClickMouse(even))
 				{
-					Mode = i-1;
+					Mode = i - 1;
 					Selection.SetRect(objects[i].Rect());
 					Selection.ShowImg();
-					
+
 					isInMenu = false;
 				}
 			}
@@ -106,6 +105,52 @@ int MainMenu::ShowMainMenu()
 		SDL_Delay(1000 / DEFAULT_FPS);
 	}
 	return Mode;
+}
+void MainMenu::AdjustVolume()
+{
+	SDL_Event even;
+	bool isInOption = true;
+	vector<Object> objects;
+	objects.push_back(Object::Object(_render, { 0,0,1280,720 }, "image//bkground//bk3.png"));
+	objects.push_back(Object::Object(_render, { (1280 - 350) / 2,(720 - 260) / 2,350,260 }, "image//button//menu_option.png"));
+	objects.push_back(Object::Object(_render, { 650,380,50,50 }, "image//button//button_turnon.png"));
+	objects.push_back(Object::Object(_render, { 650,380,50,50 }, "image//button//button_turnoff.png"));
+	objects.push_back(Object::Object(_render, { 760,240,50,50 }, "image//button//button_close.png"));
+	while (isInOption)
+	{
+		while (SDL_PollEvent(&even))
+		{
+
+			if (objects[2].ClickMouse(even))
+			{
+				if (turn_on)
+				{
+					Mix_PauseMusic();
+					turn_on = false;
+				}
+				else
+				{
+					Mix_ResumeMusic();
+					turn_on = true;
+				}
+			}
+			else if (objects[4].ClickMouse(even))
+			{
+				isInOption = false;
+				return;
+			}
+		}
+		//Clear màn hình
+		SDL_RenderClear(_render);
+		for (int i = 0; i < 2; i++) objects[i].ShowImg();
+		if (turn_on)
+			objects[2].ShowImg();
+		else
+			objects[3].ShowImg();
+		objects[4].ShowImg();
+		SDL_RenderPresent(_render);
+		SDL_Delay(1000 / DEFAULT_FPS);
+	}
 }
 
 bool MainMenu::InitSDL(SDL_Window*& window, SDL_Renderer*& renderer, int SCREEN_WIDTH = DEFAULT_WIDTH, int SCREEN_HEIGHT = DEFAULT_HEIGHT)

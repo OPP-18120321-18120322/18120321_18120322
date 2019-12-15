@@ -22,7 +22,8 @@ void BrickBall::InitData()
 	music = Mix_LoadMUS("sound//soundtrack_christmas.mp3");
 	
 	start = true;
-	
+	_info.name = "Nam";
+	_score = 0;
 }
 bool BrickBall::LoadData()
 {
@@ -74,7 +75,7 @@ BrickBall::BrickBall()
 	_width = DEFAULT_WIDTH;
 	_height = DEFAULT_HEIGHT;
 	_score = 0;
-
+	
 }
 
 BrickBall::BrickBall(SDL_Window*& window, SDL_Renderer*& renderer, int width = DEFAULT_WIDTH, int height = DEFAULT_HEIGHT)
@@ -139,13 +140,13 @@ void BrickBall::PlayGame()
 			{
 				chunk = Mix_LoadWAV("sound//GetReady.wav");
 				Mix_PlayChannel(-1, chunk, 0);
-				SDL_Delay(300);
+				SDL_Delay(200);
 				chunk = Mix_LoadWAV("sound//hieulenh.wav");
 				Mix_PlayChannel(-1, chunk, 0);
 				Object wait;
-				for (int i = 0; i < 3; i++)
+				for (int i = 3; i >= 1; i--)
 				{
-					wait.LoadImg(_render, { 0,0,1280,720 }, "image//material//wait_" + to_string(i + 1) + ".png");
+					wait.LoadImg(_render, { 0,0,1280,720 }, "image//material//wait_" + to_string(i) + ".png");
 					SDL_RenderClear(_render);
 
 					for (auto interface :_interfaces) interface.ShowImg();
@@ -209,27 +210,31 @@ void BrickBall::PlayGame()
 			}
 
 			//Va chạm thanh trượt 
-			if (_ball.Center().x <= _player.Pos().x + _player.Width() && _ball.Center().y + _ball.Radius() >= _player.Pos().y && _ball.Center().y + _ball.Radius() <= _player.Pos().y + _player.Length())
+			if (_ball.Center().x  <= _player.Pos().x + _player.Width() + _ball.Radius() && _ball.Center().y - _ball.Radius() >= _player.Pos().y && _ball.Center().y - _ball.Radius() <= _player.Pos().y + _player.Length())
 			{
-				//_ball.Collide(Ball::BORDER_LEFT, speed);
 				chunk = Mix_LoadWAV("sound//Bounce.wav");
 				Mix_PlayChannel(-1, chunk, 0);
-				_ball.Collide(Ball::BORDER_LEFT, 0);
+				_ball.Collide(Ball::BORDER_LEFT, speed);
 				_ball.LevelUp();
 				speed = 0;
-
 			}
 
 			if (_ball.Center().x >= _width - 2 * _ball.Radius() - MARGIN)
 			{
+				chunk = Mix_LoadWAV("sound//Bounce.wav");
+				Mix_PlayChannel(-1, chunk, 0);
 				_ball.Collide(Ball::BORDER_RIGHT);
 			}
 
 			//collide wall
 			if (_ball.Center().y <= 0 + MARGIN) {
+				chunk = Mix_LoadWAV("sound//Bounce.wav");
+				Mix_PlayChannel(-1, chunk, 0);
 				_ball.Collide(Ball::BORDER_TOP);
 			}
 			if (_ball.Center().y >= _height - 2 * _ball.Radius() - MARGIN) {
+				chunk = Mix_LoadWAV("sound//Bounce.wav");
+				Mix_PlayChannel(-1, chunk, 0);
 				_ball.Collide(Ball::BORDER_BOTTOM);
 			}
 			//Va cham gach
@@ -249,6 +254,7 @@ void BrickBall::PlayGame()
 					_ball.Restore({ _player.Pos().x + _player.Width(),_player.Pos().y + _player.Length() / 2 - _ball.Radius() });
 				}
 			}
+			_ball.Move();
 			SDL_RenderClear(_render);
 
 			for (auto interface :_interfaces) interface.ShowImg();
@@ -271,10 +277,10 @@ void BrickBall::PlayGame()
 			}
 			if (is_playing == false)
 			{
-				Mix_HaltMusic();
+				//Mix_HaltMusic();
 				HandleWinLose();
 			}
-			_ball.Move();
+			
 			
 			
 		}
@@ -282,22 +288,22 @@ void BrickBall::PlayGame()
 }
 void BrickBall::HandleCollideBrick()
 {
-	
-
 	int count = 0;
 	vector<Brick> brick;
+	chunk = Mix_LoadWAV("sound//ding.wav");
 	for (int i = 0; i < Maze::NUMBER_ROW; i++)
 	{
 		brick = _maze.MazeBrick(i);
 		for (int j = 0; j < Maze::NUMBER_COLUMN; j++)
 		{
+			
 			if (brick[j].IsExist())
 			{
-
+				
 				if (_ball.Center().x + 2 * _ball.Radius() >= brick[j].Pos().x && _ball.Center().x + 2 * _ball.Radius() <= brick[j].Pos().x + Brick::BRICK_LENGTH
 					&& _ball.Center().y + _ball.Radius() >= brick[j].Pos().y && _ball.Center().y + _ball.Radius() <= brick[j].Pos().y + Brick::BRICK_LENGTH)
 				{
-
+					Mix_PlayChannel(-1, chunk, 0);
 					_ball.Collide(Ball::BORDER_RIGHT);
 					_maze.MazeBrick(i)[j].SetExist(0);
 					_score += 3;
@@ -306,6 +312,7 @@ void BrickBall::HandleCollideBrick()
 				else if (_ball.Center().x >= brick[j].Pos().x && _ball.Center().x <= brick[j].Pos().x + Brick::BRICK_LENGTH
 					&& _ball.Center().y + _ball.Radius() >= brick[j].Pos().y && _ball.Center().y + _ball.Radius() <= brick[j].Pos().y + Brick::BRICK_LENGTH)
 				{
+					Mix_PlayChannel(-1, chunk, 0);
 					_ball.Collide(Ball::BORDER_LEFT);
 					_maze.MazeBrick(i)[j].SetExist(0);
 					_score += 3;
@@ -314,6 +321,7 @@ void BrickBall::HandleCollideBrick()
 				else if (_ball.Center().x + _ball.Radius() >= brick[j].Pos().x && _ball.Center().x + _ball.Radius() <= brick[j].Pos().x + Brick::BRICK_LENGTH
 					&& _ball.Center().y >= brick[j].Pos().y && _ball.Center().y <= brick[j].Pos().y + Brick::BRICK_LENGTH)
 				{
+					Mix_PlayChannel(-1, chunk, 0);
 					_ball.Collide(Ball::BORDER_TOP);
 					_maze.MazeBrick(i)[j].SetExist(0);
 					_score += 3;
@@ -322,6 +330,8 @@ void BrickBall::HandleCollideBrick()
 				else if (_ball.Center().x + _ball.Radius() >= brick[j].Pos().x && _ball.Center().x + _ball.Radius() <= brick[j].Pos().x + Brick::BRICK_LENGTH
 					&& _ball.Center().y + 2 * _ball.Radius() >= brick[j].Pos().y && _ball.Center().y + 2 * _ball.Radius() <= brick[j].Pos().y + Brick::BRICK_LENGTH)
 				{
+					
+					Mix_PlayChannel(-1, chunk, 0);
 					_ball.Collide(Ball::BORDER_BOTTOM);
 					_maze.MazeBrick(i)[j].SetExist(0);
 					_score += 3;
@@ -504,11 +514,16 @@ void BrickBall::HandleWinLose()
 		Mix_PlayChannel(-1, chunk, 0);
 		Result.LoadImg(_render, { (1040 - 380) / 2 + BORDER_LEFT - 10,150,380,190 }, "image//material//win.png");
 	}
-	else {
+	else 
+	{
 		chunk = Mix_LoadWAV("sound//Soundlose.wav");
 		Mix_PlayChannel(-1, chunk, 0);
 		Result.LoadImg(_render, { (1040 - 380) / 2 + BORDER_LEFT - 10,150,380,190 }, "image//material//lose.png");
 	}
+
+	Highscores ranktable(_render);
+	_info.score = to_string(_score);
+	ranktable.WriteFile(_info, "data//data_rank_table.txt");
 	while (IsWinLose) 
 	{
 		while (SDL_PollEvent(&even))

@@ -147,7 +147,29 @@ SDL_TextView::SDL_TextView(SDL_Renderer* renderer, int x, int y, string text, in
 	_surface = TTF_RenderText_Solid(_font, _text.c_str(), _color);
 	_texture = SDL_CreateTextureFromSurface(_renderer, _surface);
 }
+SDL_TextView::SDL_TextView(SDL_Renderer* renderer, int x, int y, string text, int fontSize, string fontName, SDL_Color color)
+{
+	TTF_Init();
+	SetFont(fontName, fontSize);
+	_text = text;
 
+	_rect.x = x;
+	_rect.y = y;
+
+	// Get width, height of a given text
+	int w, h;
+	TTF_SizeText(_font, _text.c_str(), &w, &h);
+	_rect.w = w;
+	_rect.h = h;
+
+	_color = color;
+
+	_renderer = renderer;
+	_surface = TTF_RenderText_Solid(_font, _text.c_str(), _color);
+	_texture = SDL_CreateTextureFromSurface(_renderer, _surface);
+
+
+}
 SDL_TextView::~SDL_TextView()
 {
 	if (!_texture) SDL_DestroyTexture(_texture);

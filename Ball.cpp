@@ -31,12 +31,14 @@ bool Ball::Collide(int DIRECTION, int speed_scrollbar)
 	case BORDER_LEFT: 
 	{	
 		_i = (_i > 0) ? _i : -_i;
-		_j = _j + speed_scrollbar;
-		if (speed_scrollbar != 0)
+		ratio = _i / _j;
+		if (speed_scrollbar != 0&& abs(ratio) > 0.4)
 		{
+			_j = _j + speed_scrollbar;
 			ratio = _i / _j;
-			_i = sqrt(_speed / (1 + ratio * ratio));
+			_i = sqrt(_speed * _speed / (1 + 1 / (ratio * ratio)));
 			_j = _i / ratio;
+			
 		}
 		break;
 	}

@@ -20,6 +20,7 @@ private:
 	SDL_Window* _window;
 	SDL_Renderer* _render;
 	Object interface;
+	bool turn_on;
 public:
 	// const 
 	static const int DEFAULT_WIDTH = 1280;
@@ -41,5 +42,6 @@ public:
 public:
 	void PlayGame();
 	int ShowMainMenu();
+	void AdjustVolume();
 };
 
