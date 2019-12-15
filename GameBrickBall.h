@@ -8,7 +8,8 @@
 #include"BaseObject.h"
 #include "SDL_TextView.h"
 #include"Maze.h"
-
+#include <time.h>
+#include <SDL_timer.h>
 using namespace std;
 class BrickBall
 {
@@ -40,6 +41,14 @@ private:
 	int _score;
 	int _width;
 	int _height;
+
+	int _time_start;
+	int _time_countdown;
+public:
+	void StartCountdown();
+	int GetTime();
+	void StopCountdown();
+	void ShowTime();
 public:
 	void InitData();
 	void RestoreData();

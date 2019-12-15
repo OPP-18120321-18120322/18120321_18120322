@@ -94,7 +94,7 @@ void BrickBall::PlayGame()
 		}
 		while (is_playing)
 		{
-
+			
 			// Di chuyển thanh trượt 
 			while (SDL_PollEvent(&e) != 0)
 			{
@@ -191,6 +191,7 @@ void BrickBall::PlayGame()
 			_player.ShowImg();
 			_maze.ShowMap();
 			Score.ShowScore();
+			ShowTime();
 			for (int i = 0; i < heart; i++)
 			{
 				img_hearts[i].ShowImg();
@@ -362,4 +363,42 @@ void BrickBall::PauseGame()
 void BrickBall::HandleWinLose()
 {
 	;
+}
+
+void BrickBall::StartCountdown() {
+	_time_start = SDL_GetTicks();
+	_time_countdown = 30000;
+}
+
+void BrickBall::StopCountdown() {
+	
+}
+
+int BrickBall::GetTime() {
+	return (_time_countdown - SDL_GetTicks()) / 1000;
+
+	//if (_time_countdown - SDL_GetTicks() )
+}
+
+void BrickBall::ShowTime() {
+	string text_time;
+	int time;
+	string fontPath = "Lib\\font\\MTO Yikes.ttf";
+	time = GetTime();
+
+	if (time < 1) {
+		_time_start = SDL_GetTicks();
+		text_time = "00 : 00";
+	}
+
+	if (time < 10) {
+		text_time = "00 : 0" + to_string(time);
+	}
+	else {
+		text_time = "00 : " + to_string(time);
+	}
+
+	SDL_TextView text(_render, 85, 450, text_time, 28, fontPath, {255,0,0,255});
+
+	text.Show();
 }
