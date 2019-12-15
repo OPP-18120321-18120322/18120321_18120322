@@ -20,6 +20,7 @@ private:
 public:
 	vector<Brick>& MazeBrick(int row) { return _bricks[row]; }
 	Maze();
+	void WriteData(string filename);
 	void ReadFileMaze(string filename);
 	void SetMap(SDL_Renderer* renderer, string fileimg, int num);
 	void ShowMap();

@@ -28,16 +28,19 @@ MatchScore::MatchScore(SDL_Renderer*& renderer) {
 }
 
 void MatchScore::CalcScore(int score) {
-	if (score < 10) {
-		_scores[0] = _scores[1] = 0;
-	}
+	//if (score < 10) {
+	//	_scores[0] = _scores[1] = 0;
+	//}
 
-	if (score < 100) {
-		_scores[0] = 0;
-	}
+	//if (score < 100) {
+	//	_scores[0] = 0;
+	//}
 
-	if (score > 999) {
-		//Do something.
+	//if (score > 999) {
+	//	//Do something.
+	//}
+	for (int i = 0; i < 3; i++) {
+		_scores[i] = 0;
 	}
 	
 	int i = 2;

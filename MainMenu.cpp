@@ -2,6 +2,7 @@
 #include "Highscores.h"
 MainMenu::MainMenu()
 {
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 	_initSuccess = InitSDL(_window, _render, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	_pingpong.SetPingPong(_window, _render);
 	_brickball.SetBrickBall(_window, _render, 1280, 720);
@@ -25,31 +26,28 @@ void MainMenu::PlayGame()
 		{
 		case 1:
 			//Chơi mới ->Chọn màn->Nhập tên->Load giao diện->Chơi
-			_pingpong.PlayPingPong();
-			break;
-		case 2:
-			//Chơi lại ->Load dữ liệu cũ ->Tiếp tục chơi
 			_brickball.PlayGame();
 			break;
-		case 3:
+		case 2:
 			//Hiển thị bản thành tích người chơi
-
 			cout << "3";
 			rank.ReadFile("players.txt");
 			interface.ShowImg();
 			rank.ShowHighscores();
 			isHandle = false;
+			break;
+		case 3:
+			
+
+			//Option điều chỉnh ẩm thanh 
+			isHandle = false;
 
 			break;
 		case 4:
-			//Option điều chỉnh ẩm thanh 
+			//Huong dan choi 
 			isHandle = false;
 			break;
 		case 5:
-			//Huong dan choi 
-			isHandle = false;
-			break; 
-		case 6:
 			//Exit
 			isHandle = false;
 			break;
@@ -67,28 +65,28 @@ int MainMenu::ShowMainMenu()
 	SDL_Event even;
 	objects.push_back(Object::Object(_render, { 0,0,1280,720 }, "image//bkground//bk3.png"));
 	objects.push_back(Object::Object(_render, { 800,100,340,541 }, "image//material//main_menu.png"));
-	objects.push_back(Object::Object(_render, { 875,240,190,40 }, "image//button//button_newgame.png"));
-	objects.push_back(Object::Object(_render, { 875,300,190,40 }, "image//button//button_loadgame.png"));
-	objects.push_back(Object::Object(_render, { 875,360,190,40 }, "image//button//button_highscores.png"));
-	objects.push_back(Object::Object(_render, { 875,420,190,40 }, "image//button//button_option.png"));
-	objects.push_back(Object::Object(_render, { 875,480,190,40 }, "image//button//button_help.png"));
-	objects.push_back(Object::Object(_render, { 875,540,190,40 }, "image//button//button_quit.png"));
+	objects.push_back(Object::Object(_render, { 875,240,190,50 }, "image//button//button_playgame.png"));
+	objects.push_back(Object::Object(_render, { 875,310,190,50 }, "image//button//button_findtreasure.png"));
+	objects.push_back(Object::Object(_render, { 875,380,190,50 }, "image//button//button_highscores.png"));
+	objects.push_back(Object::Object(_render, { 875,450,190,50 }, "image//button//button_option.png"));
+	objects.push_back(Object::Object(_render, { 875,520,190,50 }, "image//button//button_quit.png"));
 	//objects.push_back(Object::Object(_render, { 0,0,25,25 }, "image//material//ball.png"));
 	Selection.LoadImg(_render, { 875,540,190,40 }, "image//button//button_selected.png");
-
+	music = Mix_LoadMUS("sound//login.mp3");
+	Mix_PlayMusic(music, -1);
 	while (isInMenu)
 	{
 		
-
 		while (SDL_PollEvent(&even))
 		{
-			for (int i = 2; i < 8; i++)
+			for (int i = 2; i < 7; i++)
 			{
 				if (objects[i].ClickMouse(even))
 				{
 					Mode = i-1;
 					Selection.SetRect(objects[i].Rect());
 					Selection.ShowImg();
+					
 					isInMenu = false;
 				}
 			}
@@ -96,7 +94,7 @@ int MainMenu::ShowMainMenu()
 		//Clear màn hình
 		SDL_RenderClear(_render);
 		for (auto object : objects) object.ShowImg();
-		for (int i = 2; i < 8; i++)
+		for (int i = 2; i < 7; i++)
 		{
 			if (objects[i].CheckMouseWithButton(even.motion.x, even.motion.y))
 			{
