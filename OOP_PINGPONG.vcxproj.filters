@@ -14,6 +14,7 @@
     <ClCompile Include="GameBrickBall.cpp" />
     <ClCompile Include="MatchScore.cpp" />
     <ClCompile Include="Highscores.cpp" />
+    <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
@@ -29,5 +30,6 @@
     <ClInclude Include="GameBrickBall.h" />
     <ClInclude Include="MatchScore.h" />
     <ClInclude Include="Highscores.h" />
+    <ClInclude Include="Time.h" />
   </ItemGroup>
 </Project>

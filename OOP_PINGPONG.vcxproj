@@ -162,6 +162,7 @@
     <ClCompile Include="Maze.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SDL_TextView.cpp" />
+    <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ball.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="Maze.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SDL_TextView.h" />
+    <ClInclude Include="Time.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

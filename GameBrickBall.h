@@ -11,8 +11,8 @@
 
 #include <time.h>
 #include <SDL_timer.h>
-
 #include"SDL_mixer.h"
+#include "Time.h"
 
 using namespace std;
 class BrickBall
@@ -50,7 +50,6 @@ private:
 
 	int num;
 	bool start;
-
 public:
 	void InitData();
 	bool LoadData();
